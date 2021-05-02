@@ -6,7 +6,7 @@ class Routes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            proyectos: []
+            projects: []
         };
     }
 
@@ -14,8 +14,7 @@ class Routes extends Component {
         axios.get('http://localhost:5000/projects')
             .then(respuesta => respuesta.data)
             .then((data) => {
-                alert(data)
-                this.setState({proyectos : data})
+                this.setState({projects : data})
             });
     }
 
@@ -27,7 +26,7 @@ class Routes extends Component {
         return (
             <div>
                 Proyectos:
-                {this.state.proyectos}
+                {this.state.projects}
                 End.
             </div>
         )
