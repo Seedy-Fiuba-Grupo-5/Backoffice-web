@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Table, Form, Button} from "react-bootstrap";
+const URL = 'http://localhost:5000/'
 
 class Routes extends Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class Routes extends Component {
     }
 
     getProjects(){
-        axios.get('http://localhost:5000/projects')
+        axios.get(URL+'projects')
             .then(respuesta => respuesta.data)
             .then((data) => {
                 this.setState({projects : data})
@@ -28,7 +29,7 @@ class Routes extends Component {
         const newProject = {
             'name': this.state.newProjectName
         }
-        axios.post('http://localhost:5000/projects', newProject);
+        axios.post(URL+'projects', newProject);
         this.getProjects();
     }
 
