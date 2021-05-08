@@ -55,7 +55,7 @@ class Routes extends Component {
                             return (
                                 <tr>
                                     <td>{index}</td>
-                                    <td>{project}</td>
+                                    <td>{project.name}</td>
                                 </tr>
                             );
                         })}
