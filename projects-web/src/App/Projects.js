@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Table, Form, Button} from "react-bootstrap";
+import { Link } from 'react-router-dom';
 const URL = 'http://localhost:5000/'
 
-class Routes extends Component {
+class ProjectsList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -56,6 +57,11 @@ class Routes extends Component {
                                 <tr>
                                     <td>{index}</td>
                                     <td>{project.name}</td>
+                                    <td>
+                                        <Button>
+                                            <Link to="/projects/id" style = {{color:'white'}}>Open</Link>
+                                        </Button>
+                                    </td>
                                 </tr>
                             );
                         })}
@@ -79,4 +85,4 @@ class Routes extends Component {
     }
 }
 
-export default Routes;
+export default ProjectsList;
