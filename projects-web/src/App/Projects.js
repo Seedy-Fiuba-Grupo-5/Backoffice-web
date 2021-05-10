@@ -15,7 +15,7 @@ class ProjectsList extends Component {
 
     getProjects(){
         axios.get(URL+'projects')
-            .then(respuesta => respuesta.data)
+            .then(response => response.data)
             .then((data) => {
                 this.setState({projects : data})
             });
@@ -30,8 +30,12 @@ class ProjectsList extends Component {
         const newProject = {
             'name': this.state.newProjectName
         }
-        axios.post(URL+'projects', newProject);
-        this.getProjects();
+        axios.post(URL+'projects', newProject)
+            .then(response => {
+                if(response.status === 201){
+                    this.getProjects();
+                }
+            });
     }
 
     updateStates = event => {
@@ -52,14 +56,14 @@ class ProjectsList extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                        {this.state.projects.map((project, index) => {
+                        {this.state.projects.map((project) => {
                             return (
                                 <tr>
-                                    <td>{index}</td>
+                                    <td>{project.id}</td>
                                     <td>{project.name}</td>
                                     <td>
                                         <Button>
-                                            <Link to="/projects/id" style = {{color:'white'}}>Open</Link>
+                                            <Link to={"/projects/" + project.id} style = {{color:'white'}}>Open</Link>
                                         </Button>
                                     </td>
                                 </tr>
