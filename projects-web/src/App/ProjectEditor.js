@@ -13,9 +13,14 @@ class ProjectEditor extends Component {
 
     getProject(){
         axios.get(URL+'projects/'+this.props.match.params.id)
-            .then(response => response.data)
-            .then((data) => {
-                this.setState({project : data})
+            .then(response => {
+                if(response.status === 201){
+                    this.setState({project : response.data})
+                }
+            }).catch((err) => {
+                if(err.response){
+                    alert(err.response.status+': '+err.response.data)
+                }
             });
     }
 
@@ -33,7 +38,7 @@ class ProjectEditor extends Component {
                             <Form.Control
                                 type="text"
                                 readOnly
-                                value={this.state.project.name}
+                                value={this.state.project ? this.state.project.name : ''}
                             />
                         </Form.Group>
                     </Form>

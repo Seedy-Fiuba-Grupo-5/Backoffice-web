@@ -15,9 +15,12 @@ class ProjectsList extends Component {
 
     getProjects(){
         axios.get(URL+'projects')
-            .then(response => response.data)
-            .then((data) => {
-                this.setState({projects : data})
+            .then(response => {
+                if(response.status === 201){
+                    this.setState({projects : response.data})
+                }
+            }).catch((err) => {
+                alert(err.response.status+': '+err.response.data)
             });
     }
 

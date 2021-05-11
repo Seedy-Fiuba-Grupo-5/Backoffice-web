@@ -1,7 +1,7 @@
 // React
 import React, {Component} from "react";
-import {Navbar, Nav, NavDropdown} from "react-bootstrap";
-import { Switch, Route, Link } from 'react-router-dom';
+import {Navbar, Nav} from "react-bootstrap";
+import { Switch, Route } from 'react-router-dom';
 
 // Home
 import Home from "./Home";
