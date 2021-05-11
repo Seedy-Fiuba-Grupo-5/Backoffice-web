@@ -1,9 +1,17 @@
+// React
 import React, {Component} from "react";
 import {Navbar, Nav, NavDropdown} from "react-bootstrap";
 import { Switch, Route, Link } from 'react-router-dom';
-import ProjectsList from "./Projects";
+
+// Home
 import Home from "./Home";
+
+// Projecs
+import ProjectsList from "./Projects";
 import ProjectEditor from "./ProjectEditor";
+
+// Users
+import UsersTab from "./UsersTab.js";
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -25,6 +33,7 @@ class Routes extends Component {
                         <Nav className="mr-auto">
                             <Nav.Link href="/">Home</Nav.Link>
                             <Nav.Link href="/projects">Projects</Nav.Link>
+                            <Nav.Link href="/users">Users</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
@@ -32,6 +41,7 @@ class Routes extends Component {
                     <Route exact path='/' component={Home} />
                     <Route exact path='/projects' component={ProjectsList} />
                     <Route exact path='/projects/:id' component={ProjectEditor} />
+                    <Route exact path='/users' component={UsersTab} />
                 </Switch>
             </div>
         );
