@@ -7,7 +7,7 @@ import { Switch, Route, Link } from 'react-router-dom';
 import Home from "./Home";
 
 // Projecs
-import ProjectsList from "./Projects";
+import ProjectsList from "./ProjectsList";
 import ProjectEditor from "./ProjectEditor";
 
 // Users

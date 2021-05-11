@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {Form, Card} from "react-bootstrap";
 const URL = 'http://localhost:5000/'
 
 class ProjectEditor extends Component {
@@ -25,7 +26,18 @@ class ProjectEditor extends Component {
     render(){
         return(
             <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh', background: 'white'}}>
-                Hello + {this.state.project.name}
+                <Card style={{background: 'grey', width: '40%', height: '40%' }}>
+                    <Form>
+                        <Form.Group controlId="formProject" style={{width: '40%', height: '40%' }}>
+                            <Form.Label>Project</Form.Label>
+                            <Form.Control
+                                type="text"
+                                readOnly
+                                value={this.state.project.name}
+                            />
+                        </Form.Group>
+                    </Form>
+                </Card>
             </div>
         );
     }
