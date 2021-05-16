@@ -51,7 +51,33 @@ class ProjectsList extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="row container">
+                {this.state.projects.map((project) => {
+                    return (
+                        <div className="col s4">
+                            <div className="row">
+                                <div className="col s12 m6">
+                                    <div className="card blue-grey darken-1">
+                                        <div className="card-content white-text">
+                                            <span className="card-title">{project.name}</span>
+                                            <p>I am a very simple card. I am good at containing small bits of information.
+                                                I am convenient because I require little markup to use effectively.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    }
+}
+
+export default ProjectsList;
+
+/*
+<div className="container">
                 Proyectos:
                 <Table>
                     <thead>
@@ -90,8 +116,4 @@ class ProjectsList extends Component {
                     </Button>
                 </Form>
             </div>
-        );
-    }
-}
-
-export default ProjectsList;
+ */
