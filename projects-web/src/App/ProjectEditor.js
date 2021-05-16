@@ -14,7 +14,7 @@ class ProjectEditor extends Component {
     getProject(){
         axios.get(URL+'projects/'+this.props.match.params.id)
             .then(response => {
-                if(response.status === 201){
+                if(response.status === 200){
                     this.setState({project : response.data})
                 }
             }).catch((err) => {
