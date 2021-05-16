@@ -5,6 +5,7 @@ ADD ./projects-web /usr/src/app
 WORKDIR /usr/src/app
 
 RUN npm install yarn
+RUN npm install materialize-css@next
 RUN yarn install
 RUN yarn global add react-scripts@3.4.1
 
