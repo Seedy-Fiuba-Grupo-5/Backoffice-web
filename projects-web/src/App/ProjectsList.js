@@ -20,7 +20,9 @@ class ProjectsList extends Component {
                     this.setState({projects : response.data})
                 }
             }).catch((err) => {
-                alert(err.response.status+': '+err.response.data)
+                if(err.response){
+                    alert(err.response.status+': '+err.response.data)
+                }
             });
     }
 
@@ -49,7 +51,7 @@ class ProjectsList extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 Proyectos:
                 <Table>
                     <thead>
