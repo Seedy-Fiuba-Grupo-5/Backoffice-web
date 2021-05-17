@@ -25,7 +25,7 @@ class UsersTab extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 Usuarios:
                 <Table>
                     <thead>

@@ -1,7 +1,8 @@
 // React
 import React, {Component} from "react";
-import {Navbar, Nav} from "react-bootstrap";
 import { Switch, Route } from 'react-router-dom';
+import "materialize-css/dist/css/materialize.min.css";
+import M from "materialize-css"
 
 // Home
 import Home from "./Home";
@@ -23,20 +24,35 @@ import UsersTab from "./UsersTab.js";
 // work properly.
 
 class Routes extends Component {
+
+    componentDidMount() {
+        var elems = document.querySelectorAll('.sidenav');
+        M.Sidenav.init(elems);
+    }
+
     render(){
         return (
             <div>
-                <Navbar bg="light" expand="lg">
-                    <Navbar.Brand href="/">Seedy-FIUBA</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto">
-                            <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/projects">Projects</Nav.Link>
-                            <Nav.Link href="/users">Users</Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
+                <nav style={{background: '#0464ab'}}>
+                    <div className="nav-wrapper container" >
+                        <a href="/" data-target="slide-out" className="brand-logo"><i
+                            className="material-icons hoverable sidenav-trigger" data-target="slide-out">menu</i>Home</a>
+                    </div>
+                </nav>
+
+                <ul id="slide-out" className="sidenav">
+                    <li>
+                        <div className="user-view">
+                            <div className="background">
+                                <img src={require('./Background.jpg')} alt="background"/>
+                            </div>
+                            <a href="/users"><img className="circle" src={require('./seedyfiuba-logo.png')} alt="profile"/></a>
+                            <a href="/users"><span className="white-text name">John Doe</span></a>
+                            <a href="/users"><span className="white-text email">jdandturk@gmail.com</span></a>
+                        </div>
+                    </li>
+                    <li><a href="/projects"><i className="material-icons">cloud</i>Projects</a></li>
+                </ul>
                 <Switch>
                     <Route exact path='/' component={Home} />
                     <Route exact path='/projects' component={ProjectsList} />

@@ -14,7 +14,7 @@ class ProjectEditor extends Component {
     getProject(){
         axios.get(URL+'projects/'+this.props.match.params.id)
             .then(response => {
-                if(response.status === 201){
+                if(response.status === 200){
                     this.setState({project : response.data})
                 }
             }).catch((err) => {
@@ -30,7 +30,7 @@ class ProjectEditor extends Component {
 
     render(){
         return(
-            <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh', background: 'white'}}>
+            <div className="container" style={{background: 'white'}}>
                 <Card style={{background: 'grey', width: '40%', height: '40%' }}>
                     <Form>
                         <Form.Group controlId="formProject" style={{width: '40%', height: '40%' }}>
