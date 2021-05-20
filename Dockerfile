@@ -1,34 +1,10 @@
-FROM node as build
+FROM node:alpine as builder
+WORKDIR '/app'
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-ADD ./projects-web /usr/src/app
-
-WORKDIR /usr/src/app
-
-RUN npm install yarn
-RUN npm install materialize-css@next
-RUN yarn install
-RUN yarn global add react-scripts@3.4.1
-
-# build
-RUN yarn run build
-
-########################
-
-# PRODUCTION ENVIRONMENT
-
-# this image comes with nginx
-FROM nginx:stable-alpine
-
-# lets copy static react files
-COPY --from=build /usr/src/app/build /usr/share/nginx/html
-
-# delete default nginx config
-RUN rm /etc/nginx/conf.d/default.conf
-
-# my nginx config
-COPY react-nginx.template /etc/nginx/conf.d 
-
-COPY docker-entrypoint-prod.sh /
-
-ENTRYPOINT ["sh", "/docker-entrypoint-prod.sh"]
-
+FROM nginx
+EXPOSE 80
+COPY --from=builder /app/build /usr/share/nginx/html
