@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import { Switch, Route, Redirect } from 'react-router-dom';
 import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css"
-import "../../CSS/Home.css"
+import "../../CSS/Screens.css"
 
 // Home
 import Home from "./Home";

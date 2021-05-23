@@ -7,8 +7,11 @@ export class NavBar extends Component {
             <div>
                 <nav style={{background: '#303f9f'}}>
                     <div className="nav-wrapper container" >
-                        <a href="/" data-target="slide-out" className="brand-logo"><i
-                            className="material-icons hoverable sidenav-trigger" data-target="slide-out">menu</i>Home</a>
+                        <a href="/" data-target="slide-out" className="brand-logo">
+                            {localStorage.getItem("token") ?
+                                <i className="material-icons sidenav-trigger" data-target="slide-out">menu</i> : null}
+                            Home
+                        </a>
                     </div>
                 </nav>
                 <ul id="slide-out" className="sidenav">

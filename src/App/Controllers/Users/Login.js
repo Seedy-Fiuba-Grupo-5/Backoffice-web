@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {LoginCard} from "../../Components/LoginCard";
 const LOCAL_URL_USERS = 'http://localhost:5001/users'
 
 class Login extends Component {
@@ -23,7 +24,10 @@ class Login extends Component {
             'email': this.state.email,
             'password': this.state.password
         }
-        axios.post(URL, newSession)
+        alert(newSession.email + newSession.password);
+        localStorage.setItem("token", 2);
+        /*
+        axios.post(LOCAL_URL_USERS, newSession)
             .then(response => {
                 if(response.status === 200){
                     alert(response.data);
@@ -31,33 +35,13 @@ class Login extends Component {
                 } else {
                     alert(response.data);
                 }
-            });
+            });*/
     }
 
     render() {
         return (
             <div className="container">
-                <div className="card medium card-login">
-                    <div className="row">
-                        <form className="col s12">
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <input id="email" name="email" type="text" className="validate" onChange={this.updateStates}/>
-                                    <label htmlFor="email">E-mail</label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <input id="password" name="password" type="password" className="validate" onChange={this.updateStates}/>
-                                        <label htmlFor="password">Password</label>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <button className="btn waves-effect waves-light" type="submit" name="action" onClick={this.login}>
-                        Login<i className="material-icons right">send</i>
-                    </button>
-                </div>
+                <LoginCard updateStates={this.updateStates} login={this.login}/>
             </div>
         );
     }

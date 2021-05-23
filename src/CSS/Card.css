@@ -8,34 +8,28 @@
     background-color: #3f51b5;
 }
 
-.card-image{
-    margin: 0 auto; /* Added */
-    float: none; /* Added */
-    width: 100%;
-    background-color: white;
-
-}
-
 .card-content{
     width: 100%;
     margin-bottom: 0;
-}
-
-.btn-floating{
-    float: right;
-    color: white;
-    background-color: #c5cae9;
-}
-
-.btn-floating:hover{
-    background-color: #9e9e9e;
-}
-
-.image{
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain;
+    font-family: Helvetica, sans-serif;
+    font-size: 20px;
+    height: 100%;
 }
 
 .card-login{
+    margin: 20pt auto; /* Added */
+    width: 40%;
+    border-radius: 10px;
+    border-width: 20pt;
+    border-color: #3f51b5;
+    background-color: white;
+}
+
+.card-view{
+    float: none; /* Added */
+    width: 94%;
+    margin-top: 20pt;
+    margin-right: auto;
+    border-radius: 5px;
+    background-color: #BDBDBD;
 }

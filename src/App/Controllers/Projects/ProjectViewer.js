@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import "../../../CSS/ProjectView.css";
+import "../../../CSS/Text.css";
+import "../../../CSS/Images.css";
+import "../../../CSS/Buttons.css";
 import {SectionList} from "../../Components/SectionList";
 const URL = 'http://localhost:5000/';
 
@@ -30,15 +32,21 @@ class ProjectViewer extends Component {
     }
 
     render(){
+        const items = [
+            ["Type","class", this.state.project.type],
+            ["Goal","attach_money", this.state.project.goal],
+            ["End Date","date_range", this.state.project.endDate],
+            ["Location","location_city", this.state.project.location]
+        ];
         return(
             <div className="container">
-                <div className="h1">
+                <div className="h1 project-title">
                     {this.state.project.name}
                 </div>
                 <div className="row">
                     <div className="col">
                         <div className="card-image">
-                            <img src={require('../../seedyfiuba-logo.png')} alt="default logo" className="image"/>
+                            <img src={require('../../seedyfiuba-logo.png')} alt="default logo" className="image image-border"/>
                         </div>
                         <div className="card large card-view">
                             <div className="card-content">
@@ -46,27 +54,7 @@ class ProjectViewer extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col">
-                        <div className="section">
-                            <h5>Type</h5>
-                            <h6><i className="material-icons">class</i>{this.state.project.type}</h6>
-                        </div>
-                        <div className="divider"/>
-                        <div className="section">
-                            <h5>Goal</h5>
-                            <h6><i className="material-icons">attach_money</i>{this.state.project.goal}</h6>
-                        </div>
-                        <div className="divider"/>
-                        <div className="section">
-                            <h5>End Date</h5>
-                            <h6><i className="material-icons">date_range</i>{this.state.project.endDate}</h6>
-                        </div>
-                        <div className="divider"/>
-                        <div className="section">
-                            <h5>Location</h5>
-                            <h6><i className="material-icons">location_city</i>{this.state.project.location}</h6>
-                        </div>
-                    </div>
+                    <SectionList values={items}/>
                 </div>
             </div>
         );

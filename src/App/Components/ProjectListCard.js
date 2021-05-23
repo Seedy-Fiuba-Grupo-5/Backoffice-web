@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../../CSS/Card.css';
 
-export class Card extends Component {
+export class ProjectListCard extends Component {
 
     render() {
         return (
@@ -12,7 +12,7 @@ export class Card extends Component {
                 <div className="card-content white-text">
                     <span className="card-title">{this.props.title}</span>
                     <p>{this.props.text}</p>
-                    <a className="btn-floating" href={this.props.redirectLink}><i
+                    <a className="btn-floating add-button-card" href={this.props.redirectLink}><i
                         className="material-icons">add</i></a>
                 </div>
             </div>

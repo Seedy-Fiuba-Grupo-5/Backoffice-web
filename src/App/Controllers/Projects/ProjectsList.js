@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Card} from "../../Components/Card";
+import {ProjectListCard} from "../../Components/ProjectListCard";
 const URL = 'http://localhost:5000/'
 
 class ProjectsList extends Component {
@@ -34,7 +34,7 @@ class ProjectsList extends Component {
             <div className="container">
                 {this.state.projects.map((project) => {
                     return (
-                        <Card title={project.name} text={project.description} redirectLink={'/projects/'+project.id}/>
+                        <ProjectListCard title={project.name} text={project.description} redirectLink={'/projects/'+project.id}/>
                     );
                 })}
             </div>
