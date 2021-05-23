@@ -3,19 +3,20 @@ import React, {Component} from "react";
 import { Switch, Route, Redirect } from 'react-router-dom';
 import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css"
-import "../../CSS/Screens.css"
+import "../../../CSS/Screens.css"
 
 // Home
-import Home from "./Home";
+import Home from "../Home";
 
 // Projecs
-import ProjectsList from "./Projects/ProjectsList";
-import ProjectViewer from "./Projects/ProjectViewer";
+import ProjectsList from "../Projects/ProjectsList";
+import ProjectViewer from "../Projects/ProjectViewer";
 
 // Users
-import UsersTab from "./Users/UsersTab.js";
-import {NavBar} from "../Components/NavBar";
-import Login from "./Users/Login";
+import UsersTab from "../Users/UsersTab.js";
+import {NavBar} from "./NavBar";
+import Login from "../Users/Login";
+import {PrivateRoute} from "./PrivateRoute";
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -41,10 +42,10 @@ class Routes extends Component {
                     <Route exact path={"/"} render={props => localStorage.getItem("token") ?
                         <Redirect to={{pathname: "/home"}}/> : <Login/>
                     }/>
-                    <Route exact path='/home' component={Home} />
-                    <Route exact path='/projects' component={ProjectsList} />
-                    <Route exact path='/projects/:id' component={ProjectViewer} />
-                    <Route exact path='/users' component={UsersTab} />
+                    <PrivateRoute exact path='/home' component={Home} />
+                    <PrivateRoute exact path='/projects' component={ProjectsList} />
+                    <PrivateRoute exact path='/projects/:id' component={ProjectViewer} />
+                    <PrivateRoute exact path='/users' component={UsersTab} />
                 </Switch>
             </div>
         );

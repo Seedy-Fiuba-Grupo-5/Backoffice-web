@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {LoginCard} from "../../Components/LoginCard";
-const LOCAL_URL_USERS = 'http://localhost:5001/users'
+const LOCAL_URL_USERS = 'http://localhost:5001/users/login'
 
 class Login extends Component {
     constructor(props) {
@@ -24,18 +24,17 @@ class Login extends Component {
             'email': this.state.email,
             'password': this.state.password
         }
-        alert(newSession.email + newSession.password);
-        localStorage.setItem("token", 2);
-        /*
         axios.post(LOCAL_URL_USERS, newSession)
             .then(response => {
                 if(response.status === 200){
-                    alert(response.data);
-                    localStorage.setItem("token", response.data);
-                } else {
-                    alert(response.data);
+                    localStorage.setItem("token", response.data.id);
+                    window.location.href = "/home";
                 }
-            });*/
+            }).catch((err) => {
+                if(err.response){
+                    alert(err.response.status+': '+err.response.data)
+                }
+        });
     }
 
     render() {
