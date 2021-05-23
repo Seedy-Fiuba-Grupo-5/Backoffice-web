@@ -5,7 +5,7 @@ export class Card extends Component {
 
     render() {
         return (
-            <div className="card medium">
+            <div className="card medium project-card">
                 <div className="card-image">
                     <img src={require('../../App/seedyfiuba-logo.png')} alt="default logo" className="image"/>
                 </div>

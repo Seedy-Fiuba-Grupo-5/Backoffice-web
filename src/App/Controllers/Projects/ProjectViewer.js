@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import "../../../CSS/ProjectView.css";
+import {SectionList} from "../../Components/SectionList";
 const URL = 'http://localhost:5000/';
 
-class ProjectEditor extends Component {
+class ProjectViewer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -46,21 +47,24 @@ class ProjectEditor extends Component {
                         </div>
                     </div>
                     <div className="col">
-                        <div className="divider"/>
                         <div className="section">
-                            <h5>{this.state.project.type}</h5>
+                            <h5>Type</h5>
+                            <h6><i className="material-icons">class</i>{this.state.project.type}</h6>
                         </div>
                         <div className="divider"/>
                         <div className="section">
-                            <h5>{this.state.project.goal}</h5>
+                            <h5>Goal</h5>
+                            <h6><i className="material-icons">attach_money</i>{this.state.project.goal}</h6>
                         </div>
                         <div className="divider"/>
                         <div className="section">
-                            <h5>{this.state.project.endDate}</h5>
+                            <h5>End Date</h5>
+                            <h6><i className="material-icons">date_range</i>{this.state.project.endDate}</h6>
                         </div>
                         <div className="divider"/>
                         <div className="section">
-                            <h5>{this.state.project.location}</h5>
+                            <h5>Location</h5>
+                            <h6><i className="material-icons">location_city</i>{this.state.project.location}</h6>
                         </div>
                     </div>
                 </div>
@@ -69,4 +73,4 @@ class ProjectEditor extends Component {
     }
 }
 
-export default ProjectEditor;
+export default ProjectViewer;
