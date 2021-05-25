@@ -4,7 +4,8 @@ import "../../../CSS/Text.css";
 import "../../../CSS/Images.css";
 import "../../../CSS/Buttons.css";
 import {SectionList} from "../../Components/SectionList";
-const URL = 'http://localhost:5000/';
+import {getSetting} from "../../settings";
+const URL = getSetting('BACKEND_PROJECTS_URL');
 
 class ProjectViewer extends Component {
     constructor(props) {

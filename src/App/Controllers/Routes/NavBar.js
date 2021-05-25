@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-const URL = 'http://localhost:5001/users/';
+import {getSetting} from "../../settings";
+const URL = getSetting('BACKEND_USERS_URL') + 'users/';
 
 export class NavBar extends Component {
     constructor(props) {

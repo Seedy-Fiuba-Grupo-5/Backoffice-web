@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {ProjectListCard} from "../../Components/ProjectListCard";
-const URL = 'http://localhost:5000/'
+import {getSetting} from "../../settings";
+const URL = getSetting('BACKEND_PROJECTS_URL');
 
 class ProjectsList extends Component {
     constructor(props) {

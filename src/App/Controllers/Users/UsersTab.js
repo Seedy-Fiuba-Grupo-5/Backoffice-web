@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Table} from "react-bootstrap";
-const LOCAL_URL_USERS = 'http://localhost:5001'
+import {getSetting} from "../../settings";
+const LOCAL_URL_USERS =  getSetting('BACKEND_USERS_URL');
 
 class UsersTab extends Component {
     constructor(props) {
