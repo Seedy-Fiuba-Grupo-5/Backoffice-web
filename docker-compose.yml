@@ -10,6 +10,8 @@ services:
     volumes:
       - /app/node_modules
       - .:/app
+    environment: 
+      - PORT=3000
   service_backoffice_tests:
     build:
       context: .
