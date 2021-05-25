@@ -7,4 +7,7 @@ RUN npm install
 
 COPY . .
 
+ENV REACT_APP_BACKEND_USERS_URL='http://localhost:5001/'
+ENV REACT_APP_BACKEND_PROJECTS_URL='http://localhost:5000/'
+
 CMD ["npm", "run", "start"]
