@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {LoginCard} from "../../Components/LoginCard";
-const LOCAL_URL_USERS = 'http://localhost:5001/users/login'
+import {getSetting} from "../../settings";
+const LOCAL_URL_USERS = getSetting('BACKEND_USERS_URL') + 'users/login';
 
 class Login extends Component {
     constructor(props) {

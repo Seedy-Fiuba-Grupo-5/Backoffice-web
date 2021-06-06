@@ -1,10 +1,13 @@
-FROM node:alpine as builder
-WORKDIR '/app'
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+FROM node:alpine
 
-FROM nginx
-EXPOSE 80
-COPY --from=builder /app/build /usr/share/nginx/html
+WORKDIR '/app'
+
+COPY package.json .
+RUN npm install
+
+COPY . .
+
+ENV REACT_APP_BACKEND_USERS_URL='https://seedy-fiuba-backend-users.herokuapp.com/'
+ENV REACT_APP_BACKEND_PROJECTS_URL='https://seedy-fiuba-backend-projects.herokuapp.com/'
+
+CMD ["npm", "run", "start"]
