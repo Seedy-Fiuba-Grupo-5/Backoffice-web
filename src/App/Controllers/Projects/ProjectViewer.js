@@ -5,7 +5,7 @@ import "../../../CSS/Images.css";
 import "../../../CSS/Buttons.css";
 import {SectionList} from "../../Components/SectionList";
 import {getSetting} from "../../settings";
-const URL = getSetting('BACKEND_PROJECTS_URL');
+const URL = getSetting('BACKEND_URL')+'/projects/';
 
 class ProjectViewer extends Component {
     constructor(props) {
@@ -16,7 +16,7 @@ class ProjectViewer extends Component {
     }
 
     getProject(){
-        axios.get(URL+'projects/'+this.props.match.params.id)
+        axios.get(URL+this.props.match.params.id)
             .then(response => {
                 if(response.status === 200){
                     this.setState({project : response.data})

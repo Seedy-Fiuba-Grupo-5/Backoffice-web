@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Table} from "react-bootstrap";
 import {getSetting} from "../../settings";
-const LOCAL_URL_USERS =  getSetting('BACKEND_USERS_URL');
+import {Table} from "../../Components/Table";
+const LOCAL_URL_USERS =  getSetting('BACKEND_URL')+'/users';
 
 class UsersTab extends Component {
     constructor(props) {
@@ -13,9 +13,16 @@ class UsersTab extends Component {
     }
 
     getUsers(){
-        axios.get(LOCAL_URL_USERS+'/users')
+        axios.get(LOCAL_URL_USERS)
             .then(response => response.data)
             .then((data) => {
+                data.map((user) => {
+                    if(user.active) {
+                        user.active = 'True'
+                    } else {
+                        user.active = 'False'
+                    }
+                })
                 this.setState({users : data})
             });
     }
@@ -25,34 +32,9 @@ class UsersTab extends Component {
     }
 
     render() {
+        const items = ['ID', 'Name', 'Last Name', 'E-mail', 'Is Active']
         return (
-            <div className="container">
-                Usuarios:
-                <Table>
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Last name</th>
-                        <th>email</th>
-                        <th>Active</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.users.map((user) => {
-                            return (
-                                <tr>
-                                    <td>{user.id}</td>
-                                    <td>{user.name}</td>
-                                    <td>{user.lastName}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.active ? 'Yes' : 'No'}</td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </Table>
-            </div>
+            <Table items={items} values={this.state.users}/>
         );
     }
 }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {getSetting} from "../../settings";
-const URL = getSetting('BACKEND_USERS_URL') + 'users/';
+const URL = getSetting('BACKEND_URL') + '/users/';
 
 export class NavBar extends Component {
     constructor(props) {
@@ -19,7 +19,9 @@ export class NavBar extends Component {
                 }
             }).catch((err) => {
             if(err.response){
-                alert(err.response.status+': '+err.response.data)
+                localStorage.removeItem("token");
+                alert(err.response.status+': '+err.response.data);
+                window.location.href = "/";
             }
         });
     }

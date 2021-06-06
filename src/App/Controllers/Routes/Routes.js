@@ -9,7 +9,7 @@ import "../../../CSS/Screens.css"
 import Home from "../Home";
 
 // Projecs
-import ProjectsList from "../Projects/ProjectsList";
+import UserProjectsList from "../Users/UserProjectsList";
 import ProjectViewer from "../Projects/ProjectViewer";
 
 // Users
@@ -17,6 +17,7 @@ import UsersTab from "../Users/UsersTab.js";
 import {NavBar} from "./NavBar";
 import Login from "../Users/Login";
 import {PrivateRoute} from "./PrivateRoute";
+import ProjectsList from "../Projects/ProjectsList";
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).

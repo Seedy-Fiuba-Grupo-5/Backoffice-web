@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {LoginCard} from "../../Components/LoginCard";
 import {getSetting} from "../../settings";
-const LOCAL_URL_USERS = getSetting('BACKEND_USERS_URL') + 'users/login';
+const LOCAL_URL_USERS = getSetting('BACKEND_URL') + '/users/login';
 
 class Login extends Component {
     constructor(props) {
@@ -27,7 +27,7 @@ class Login extends Component {
         }
         axios.post(LOCAL_URL_USERS, newSession)
             .then(response => {
-                if(response.status === 200){
+                if(response.status === 200 && Number.isInteger(response.data.id)){
                     localStorage.setItem("token", response.data.id);
                     window.location.href = "/home";
                 }
