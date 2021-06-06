@@ -1,0 +1,14 @@
+.project-title{
+    margin: 10pt;
+    margin-left: 50pt;
+    text-align: left;
+    font-family: Helvetica, sans-serif;
+    font-size: 80px;
+    letter-spacing: 4px;
+    word-spacing: -8px;
+    color: #3f51b5;
+}
+
+.login-text{
+    text-align: center;
+}

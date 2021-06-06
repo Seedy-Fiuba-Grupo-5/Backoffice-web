@@ -1,33 +1,13 @@
-FROM node as build
+FROM node:alpine
 
-ADD ./projects-web /usr/src/app
+WORKDIR '/app'
 
-WORKDIR /usr/src/app
+COPY package.json .
+RUN npm install
 
-RUN npm install yarn
-RUN yarn install
-RUN yarn global add react-scripts@3.4.1
+COPY . .
 
-# build
-RUN yarn run build
+ENV REACT_APP_BACKEND_USERS_URL='https://seedy-fiuba-backend-users.herokuapp.com/'
+ENV REACT_APP_BACKEND_PROJECTS_URL='https://seedy-fiuba-backend-projects.herokuapp.com/'
 
-########################
-
-# PRODUCTION ENVIRONMENT
-
-# this image comes with nginx
-FROM nginx:stable-alpine
-
-# lets copy static react files
-COPY --from=build /usr/src/app/build /usr/share/nginx/html
-
-# delete default nginx config
-RUN rm /etc/nginx/conf.d/default.conf
-
-# my nginx config
-COPY react-nginx.template /etc/nginx/conf.d 
-
-COPY docker-entrypoint-prod.sh /
-
-ENTRYPOINT ["sh", "/docker-entrypoint-prod.sh"]
-
+CMD ["npm", "run", "start"]

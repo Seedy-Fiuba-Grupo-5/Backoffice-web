@@ -1,17 +1,25 @@
-version: '3.2'
-
+version: '3'
 services:
-  chotuve-web-interface:
-    command: npm start
-    container_name: PROJECTS_CONTAINER
+  service_backoffice_web:
+    container_name: container_backoffice_web
     build:
       context: .
-      dockerfile: Dockerfile-development
-    environment:
-      env_file: .env
+      dockerfile: Dockerfile.dev
+    ports: 
+      - "3000:3000"
     volumes:
-      - './projects-web:/usr/src/app'
-      - '/usr/src/app/node_modules'
-    ports:
-      - '3000:3000'
-    stdin_open: true
+      - /app/node_modules
+      - .:/app
+    environment: 
+      - PORT=3000
+      # Descomentar estas lineas para conectarse a los backends en Heroku
+      # - REACT_APP_BACKEND_USERS_URL=https://seedy-fiuba-backend-users.herokuapp.com/
+      # - REACT_APP_BACKEND_PROJECTS_URL=https://seedy-fiuba-backend-projects.herokuapp.com/
+  service_backoffice_tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
