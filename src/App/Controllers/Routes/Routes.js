@@ -9,7 +9,7 @@ import "../../../CSS/Screens.css"
 import Home from "../Home";
 
 // Projecs
-import UserProjectsList from "../Users/UserProjectsList";
+import Profile from "../Users/Profile";
 import ProjectViewer from "../Projects/ProjectViewer";
 
 // Users
@@ -47,6 +47,7 @@ class Routes extends Component {
                     <PrivateRoute exact path='/projects' component={ProjectsList} />
                     <PrivateRoute exact path='/projects/:id' component={ProjectViewer} />
                     <PrivateRoute exact path='/users' component={UsersTab} />
+                    <PrivateRoute exact path='/users/:id' component={Profile} />
                 </Switch>
             </div>
         );

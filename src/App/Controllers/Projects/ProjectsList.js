@@ -10,6 +10,7 @@ class ProjectsList extends Component {
         this.state = {
             projects: []
         };
+        this.redirect = this.redirect.bind(this);
     }
 
     getProjects(){
@@ -20,6 +21,7 @@ class ProjectsList extends Component {
                         delete project['description'];
                         delete project['hashtags'];
                         delete project['description'];
+                        return 0;
                     })
                     this.setState({projects : response.data});
                 }
@@ -34,14 +36,14 @@ class ProjectsList extends Component {
         this.getProjects();
     }
 
-    redirect() {
-        alert('Hola')
+    redirect(project) {
+        window.location.replace("/projects/"+project.id);
     }
 
     render() {
         const items = ['ID', 'Name', 'Type', 'End Date', 'Goal', 'Location']
         return (
-            <Table items={items} values={this.state.projects}/>
+            <Table items={items} values={this.state.projects} redirect={this.redirect}/>
         );
     }
 }

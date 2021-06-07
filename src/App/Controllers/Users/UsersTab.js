@@ -10,6 +10,7 @@ class UsersTab extends Component {
         this.state = {
             users: []
         };
+        this.redirect = this.redirect.bind(this);
     }
 
     getUsers(){
@@ -22,9 +23,14 @@ class UsersTab extends Component {
                     } else {
                         user.active = 'False'
                     }
+                    return 0;
                 })
                 this.setState({users : data})
             });
+    }
+
+    redirect(user){
+        window.location.replace("/users/"+user.id);
     }
 
     componentDidMount() {
@@ -34,7 +40,7 @@ class UsersTab extends Component {
     render() {
         const items = ['ID', 'Name', 'Last Name', 'E-mail', 'Is Active']
         return (
-            <Table items={items} values={this.state.users}/>
+            <Table items={items} values={this.state.users} redirect={this.redirect}/>
         );
     }
 }

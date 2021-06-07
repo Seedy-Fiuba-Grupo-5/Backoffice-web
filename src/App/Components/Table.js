@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import "../../CSS/Screens.css"
 
 export class Table extends Component {
+
     render() {
         return(
             <div className="container">
-                <table className="responsive-table highlight clickable-row">
+                <table className="responsive-table highlight">
                     <thead>
                     <tr>
                         {this.props.items.map((item) => {
@@ -18,10 +19,10 @@ export class Table extends Component {
                     <tbody>
                         {this.props.values.map((value) => {
                             return(
-                                <tr>
+                                <tr onClick={()=>this.props.redirect(value)} style={{cursor: "pointer"}}>
                                     {Object.values(value).map((key) => {
                                         return(
-                                            <td className='clickable-row' onClick={this.props.redirect}>{key}</td>
+                                            <td>{key}</td>
                                         );
                                     })}
                                 </tr>

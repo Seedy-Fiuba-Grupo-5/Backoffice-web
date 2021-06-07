@@ -56,6 +56,7 @@ export class NavBar extends Component {
                         </div>
                     </li>
                     <li><a href={"/projects"}><i className="material-icons">perm_media</i>Projects</a></li>
+                    <li><a href={"/users"}><i className="material-icons">supervisor_account</i>Users</a></li>
                 </ul>
             </div>
         )
