@@ -1,7 +1,7 @@
 .project-card{
     margin: 0 auto; /* Added */
     float: none; /* Added */
-    width: 50%;
+    width: 80%;
     margin-top: 20pt;
     border-radius: 5px;
     border-color: #212121;
@@ -32,4 +32,10 @@
     margin-right: auto;
     border-radius: 5px;
     background-color: #BDBDBD;
+}
+
+.projects-list-card{
+    height: 70vh;
+    overflow-x: scroll;
+    margin-top: 10vh;
 }

@@ -4,7 +4,7 @@ import {getSetting} from "../../settings";
 import {Table} from "../../Components/Table";
 const LOCAL_URL_USERS =  getSetting('BACKEND_URL')+'/users';
 
-class UsersTab extends Component {
+class UsersTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,4 +45,4 @@ class UsersTab extends Component {
     }
 }
 
-export default UsersTab;
+export default UsersTable;
