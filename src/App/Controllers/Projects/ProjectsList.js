@@ -43,7 +43,14 @@ class ProjectsList extends Component {
     render() {
         const items = ['ID', 'Name', 'Type', 'End Date', 'Goal', 'Location']
         return (
-            <Table items={items} values={this.state.projects} redirect={this.redirect}/>
+            <div className="container">
+                <div className="h1" style={{marginTop:"20pt"}}>
+                    Projects Table
+                </div>
+                <div className="scroll-card">
+                    <Table items={items} values={this.state.projects} redirect={this.redirect}/>
+                </div>
+            </div>
         );
     }
 }

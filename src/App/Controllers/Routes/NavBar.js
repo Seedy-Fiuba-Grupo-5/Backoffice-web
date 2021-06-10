@@ -50,9 +50,9 @@ export class NavBar extends Component {
                             <div className="background">
                                 <img src={require('../../Background.jpg')} alt="background"/>
                             </div>
-                            <a href={"/users"}><img className="circle" src={require('../../seedyfiuba-logo.png')} alt="profile"/></a>
-                            <a href={"/users"}><span className="white-text name">{this.state.user.name+' '+this.state.user.lastName}</span></a>
-                            <a href={"/users"}><span className="white-text email">{this.state.user.email}</span></a>
+                            <a href={"/users/"+localStorage.getItem("token")}><img className="circle" src={require('../../seedyfiuba-logo.png')} alt="profile"/></a>
+                            <span className="white-text name">{this.state.user.name+' '+this.state.user.lastName}</span>
+                            <span className="white-text email">{this.state.user.email}</span>
                         </div>
                     </li>
                     <li><a href={"/projects"}><i className="material-icons">perm_media</i>Projects</a></li>

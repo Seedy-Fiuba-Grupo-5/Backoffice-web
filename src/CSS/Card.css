@@ -34,8 +34,7 @@
     background-color: #BDBDBD;
 }
 
-.projects-list-card{
+.scroll-card{
     height: 70vh;
     overflow-x: scroll;
-    margin-top: 10vh;
 }

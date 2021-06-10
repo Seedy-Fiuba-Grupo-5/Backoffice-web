@@ -61,7 +61,7 @@ class Profile extends Component {
             <div className="container">
                 <div className="row">
                     <div className="col section-container">
-                        <div className="card projects-list-card">
+                        <div className="card scroll-card" style={{marginTop:"10vh"}}>
                             <div className="card-content">
                                 {this.state.projects.length > 0 ? this.state.projects.map((project) => {
                                     return (

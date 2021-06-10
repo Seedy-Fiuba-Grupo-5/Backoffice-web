@@ -40,7 +40,14 @@ class UsersTable extends Component {
     render() {
         const items = ['ID', 'Name', 'Last Name', 'E-mail', 'Is Active']
         return (
-            <Table items={items} values={this.state.users} redirect={this.redirect}/>
+            <div className="container">
+                <div className="h1" style={{marginTop:"20pt"}}>
+                    Users Table
+                </div>
+                <div className="scroll-card">
+                    <Table items={items} values={this.state.users} redirect={this.redirect}/>
+                </div>
+            </div>
         );
     }
 }
