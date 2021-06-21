@@ -35,7 +35,7 @@ export class NavBar extends Component {
     render() {
         return (
             <div>
-                <nav style={{background: '#303f9f'}}>
+                <nav style={{background: '#4b1e4d'}}>
                     <div className="nav-wrapper container" >
                         <a href="/" data-target="slide-out" className="brand-logo">
                             {localStorage.getItem("token") ?
@@ -47,10 +47,8 @@ export class NavBar extends Component {
                 <ul id="slide-out" className="sidenav">
                     <li>
                         <div className="user-view">
-                            <div className="background">
-                                <img src={require('../../Background.jpg')} alt="background"/>
-                            </div>
-                            <a href={"/users/"+localStorage.getItem("token")}><img className="circle" src={require('../../seedyfiuba-logo.png')} alt="profile"/></a>
+                            <div className="background" style={{background: '#381242'}}/>
+                            <a href={"/users/"+localStorage.getItem("token")}><img style={{width: "50%"}} src={require('../../seedyfiuba-logo.jpg')} alt="profile"/></a>
                             <span className="white-text name">{this.state.user.name+' '+this.state.user.lastName}</span>
                             <span className="white-text email">{this.state.user.email}</span>
                         </div>

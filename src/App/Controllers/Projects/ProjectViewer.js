@@ -47,7 +47,7 @@ class ProjectViewer extends Component {
                 <div className="row">
                     <div className="col">
                         <div className="card-image">
-                            <img src={require('../../seedyfiuba-logo.png')} alt="default logo" className="image image-border"/>
+                            <img src={require('../../seedyfiuba-logo.jpg')} alt="default logo" className="image image-border"/>
                         </div>
                         <div className="card large card-view">
                             <div className="card-content">

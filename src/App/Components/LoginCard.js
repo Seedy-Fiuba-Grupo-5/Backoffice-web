@@ -1,15 +1,20 @@
 import React, {Component} from 'react';
+import '../../CSS/Card.css'
+import '../../CSS/Images.css'
 
 export class LoginCard extends Component {
+
     render() {
         return (
             <div className="card card-login">
-                <div className="h3 login-text">
-                    <img src={require('../seedyfiuba-logo.png')} alt="default logo" className="image"/>
-                    Bienvenido a Seedy-FIUBA
-                    <h6>Por favor, ingrese utilizando su email y contraseña.</h6>
+                <div className="card-header">
+                    <div className="login-text" style={{height: "20vh"}}>
+                        <img src={require('../seedyfiuba-logo.jpg')} alt="default logo" className="image" style={{marginTop: "20pt"}}/>
+                        <h3>Bienvenido a Seedy-FIUBA</h3>
+                        <h6>Por favor, ingrese utilizando su email y contraseña.</h6>
+                    </div>
                 </div>
-                <div className="card-content">
+                <div className="card-content" style={{marginTop: "100pt"}}>
                     <div className="row">
                         <form className="col s12">
                             <div className="row">
@@ -25,10 +30,10 @@ export class LoginCard extends Component {
                                 </div>
                             </div>
                         </form>
+                        <button className="btn waves-effect waves-light login-button" type="submit" name="action" onClick={this.props.login}>
+                            Login<i className="material-icons right">send</i>
+                        </button>
                     </div>
-                    <button className="btn waves-effect waves-light login-button" type="submit" name="action" onClick={this.props.login}>
-                        Login<i className="material-icons right">send</i>
-                    </button>
                 </div>
             </div>
         )
