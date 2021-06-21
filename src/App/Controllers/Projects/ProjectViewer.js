@@ -5,25 +5,36 @@ import "../../../CSS/Images.css";
 import "../../../CSS/Buttons.css";
 import {SectionList} from "../../Components/SectionList";
 import {getSetting} from "../../settings";
+import {Messagebar} from "../../Components/Messagebar";
+import LinearProgress from '@material-ui/core/LinearProgress';
 const URL = getSetting('BACKEND_URL')+'/projects/';
 
 class ProjectViewer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            project: ''
+            project: '',
+            error: '',
+            showSnackbar: false,
+            loading: false
         };
     }
 
     getProject(){
+        this.setState({loading : true});
         axios.get(URL+this.props.match.params.id)
             .then(response => {
                 if(response.status === 200){
-                    this.setState({project : response.data})
+                    this.setState({project : response.data});
+                    this.setState({showSnackbar : true});
+                    this.setState({loading : false});
+                    this.setState({error: ''})
                 }
             }).catch((err) => {
                 if(err.response){
-                    alert(err.response.status+': '+err.response.data)
+                    this.setState({error: err.response.status+': '+err.response.data["status"]});
+                    this.setState({showSnackbar : true});
+                    this.setState({loading : false});
                 }
             });
     }
@@ -41,6 +52,9 @@ class ProjectViewer extends Component {
         ];
         return(
             <div className="container">
+                {this.state.loading ?
+                    <LinearProgress /> : null
+                }
                 <div className="h1 project-title">
                     {this.state.project.name}
                 </div>
@@ -57,6 +71,12 @@ class ProjectViewer extends Component {
                     </div>
                     <SectionList values={items}/>
                 </div>
+                {this.state.showSnackbar ?
+                    <Messagebar
+                        message={this.state.error.length > 0 ? this.state.error : "Project loaded successfully"}
+                        type={this.state.error.length > 0 ? "error" : "success"}
+                    /> : null
+                }
             </div>
         );
     }

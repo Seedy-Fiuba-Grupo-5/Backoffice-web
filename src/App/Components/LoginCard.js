@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import '../../CSS/Card.css'
 import '../../CSS/Images.css'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export class LoginCard extends Component {
 
@@ -31,7 +32,14 @@ export class LoginCard extends Component {
                             </div>
                         </form>
                         <button className="btn waves-effect waves-light login-button" type="submit" name="action" onClick={this.props.login}>
-                            Login<i className="material-icons right">send</i>
+                            <div className="row">
+                                <div className="col">
+                                    Login
+                                </div>
+                                <div className="col" style={{width: "30%"}}>
+                                    {this.props.loading ? <CircularProgress size={24}/> : <i className="material-icons right">send</i>}
+                                </div>
+                            </div>
                         </button>
                     </div>
                 </div>

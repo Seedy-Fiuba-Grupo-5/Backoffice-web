@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {getSetting} from "../../settings";
+import {Messagebar} from "../../Components/Messagebar";
 const URL = getSetting('BACKEND_URL') + '/users/';
 
 export class NavBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: ''
+            user: '',
+            error: '',
+            showSnackbar: false
         };
     }
 
@@ -15,12 +18,15 @@ export class NavBar extends Component {
         axios.get(URL+localStorage.getItem("token"))
             .then(response => {
                 if(response.status === 200){
-                    this.setState({user : response.data})
+                    this.setState({user : response.data});
+                    this.setState({error: ''});
+                    this.setState({showSnackbar : false});
                 }
             }).catch((err) => {
             if(err.response){
-                localStorage.removeItem("token");
-                alert(err.response.status+': '+err.response.data);
+                localStorage.removeItem("token")
+                this.setState({error: err.response.status+': '+err.response.data["status"]});
+                this.setState({showSnackbar : true});
                 window.location.href = "/";
             }
         });
@@ -56,6 +62,12 @@ export class NavBar extends Component {
                     <li><a href={"/projects"}><i className="material-icons">perm_media</i>Projects</a></li>
                     <li><a href={"/users"}><i className="material-icons">supervisor_account</i>Users</a></li>
                 </ul>
+                {this.state.showSnackbar ?
+                    <Messagebar
+                        message={this.state.error.length > 0 ? this.state.error : "Profile loaded successfully"}
+                        type={this.state.error.length > 0 ? "error" : "success"}
+                    /> : null
+                }
             </div>
         )
     }
