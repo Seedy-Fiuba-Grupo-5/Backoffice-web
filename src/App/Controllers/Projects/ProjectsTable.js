@@ -3,6 +3,8 @@ import axios from 'axios';
 import {getSetting} from "../../settings";
 import {Table} from "../../Components/Table";
 import {Messagebar} from "../../Components/Messagebar";
+import Slider from '@material-ui/core/Slider'
+import Typography from '@material-ui/core/Typography';
 const URL = getSetting('BACKEND_URL')+'/projects';
 
 class ProjectsTable extends Component {
@@ -11,9 +13,11 @@ class ProjectsTable extends Component {
         this.state = {
             projects: [],
             showSnackbar: false,
-            error: ''
+            error: '',
+            goalFilter: [10, 20]
         };
         this.redirect = this.redirect.bind(this);
+        this.handleGoalSliderChange = this.handleGoalSliderChange.bind(this);
     }
 
     getProjects(){
@@ -24,7 +28,7 @@ class ProjectsTable extends Component {
                     response.data.map((project) => {
                         delete project['description'];
                         delete project['hashtags'];
-                        delete project['description'];
+                        delete project['image'];
                         return 0;
                     })
                     this.setState({projects : response.data});
@@ -49,6 +53,10 @@ class ProjectsTable extends Component {
         window.location.replace("/projects/"+project.id);
     }
 
+    handleGoalSliderChange = (event, newValue) => {
+        event.preventDefault();
+        this.setState({goalFilter: newValue});
+    };
     render() {
         const items = ['ID', 'Name', 'Type', 'End Date', 'Goal', 'Location']
         return (
@@ -56,14 +64,41 @@ class ProjectsTable extends Component {
                 <div className="h1" style={{marginTop:"20pt"}}>
                     Projects Table
                 </div>
-                <div className="scroll-card">
-                    <Table items={items} values={this.state.projects} redirect={this.redirect} loading={this.state.loading}/>
-                    {this.state.showSnackbar ?
-                        <Messagebar
-                            message={this.state.error.length > 0 ? this.state.error : "Projects loaded successfully"}
-                            type={this.state.error.length > 0 ? "error" : "success"}
-                        /> : null
-                    }
+                <div className="row">
+                    <div className="col">
+                        <div className="scroll-card">
+                            <Table items={items} values={this.state.projects} redirect={this.redirect} loading={this.state.loading}/>
+                            {this.state.showSnackbar ?
+                                <Messagebar
+                                    message={this.state.error.length > 0 ? this.state.error : "Projects loaded successfully"}
+                                    type={this.state.error.length > 0 ? "error" : "success"}
+                                /> : null
+                            }
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="card filter-card">
+                            <div className="input-field">
+                                <select multiple>
+                                    <option value="" disabled>Project Type</option>
+                                    <option value="1">Option 1</option>
+                                    <option value="2">Option 2</option>
+                                    <option value="3">Option 3</option>
+                                </select>
+                            </div>
+                            <div className="input-field">
+                                <Typography id="range-slider" gutterBottom>
+                                    Goal range
+                                </Typography>
+                                <Slider
+                                    value={this.state.goalFilter}
+                                    onChange={this.handleGoalSliderChange}
+                                    valueLabelDisplay="auto"
+                                    aria-labelledby="range-slider"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
