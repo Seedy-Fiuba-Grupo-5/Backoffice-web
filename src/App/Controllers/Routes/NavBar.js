@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import {getSetting} from "../../settings";
 import {Messagebar} from "../../Components/Messagebar";
+import ApiController from "../ApiController";
 const URL = getSetting('BACKEND_URL') + '/users/';
 
 export class NavBar extends Component {
@@ -12,24 +12,29 @@ export class NavBar extends Component {
             error: '',
             showSnackbar: false
         };
+        this.responseHandler = this.responseHandler.bind(this);
+        this.errorHandler = this.errorHandler.bind(this);
+    }
+
+    responseHandler(response) {
+        if(response.status === 200){
+            this.setState({user : response.data});
+            this.setState({error: ''});
+            this.setState({showSnackbar : false});
+        }
+    }
+
+    errorHandler(err) {
+        if(err.response){
+            localStorage.removeItem("token")
+            this.setState({error: err.response.status+': '+err.response.data["status"]});
+            this.setState({showSnackbar : true});
+            window.location.href = "/";
+        }
     }
 
     getProfile(){
-        axios.get(URL+localStorage.getItem("token"))
-            .then(response => {
-                if(response.status === 200){
-                    this.setState({user : response.data});
-                    this.setState({error: ''});
-                    this.setState({showSnackbar : false});
-                }
-            }).catch((err) => {
-            if(err.response){
-                localStorage.removeItem("token")
-                this.setState({error: err.response.status+': '+err.response.data["status"]});
-                this.setState({showSnackbar : true});
-                window.location.href = "/";
-            }
-        });
+        ApiController.get(URL+localStorage.getItem("token"), this.errorHandler, this.responseHandler)
     }
 
     componentDidMount() {

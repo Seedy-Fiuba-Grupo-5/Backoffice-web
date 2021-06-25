@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import {ProjectListCard} from "../../Components/ProjectListCard";
 import {getSetting} from "../../settings";
 import {SectionList} from "../../Components/SectionList";
 import {Messagebar} from "../../Components/Messagebar";
 import LinearProgress from '@material-ui/core/LinearProgress';
+import ApiController from "../ApiController";
 const URL = getSetting('BACKEND_URL')+'/users/';
 
 class Profile extends Component {
@@ -18,49 +18,57 @@ class Profile extends Component {
             error: '',
             showSnackbar: false
         };
+        this.projectResponseHandler = this.projectResponseHandler.bind(this);
+        this.projectErrorHandler = this.projectErrorHandler.bind(this);
+        this.userErrorHandler = this.userErrorHandler.bind(this);
+        this.userResponseHandler = this.userResponseHandler.bind(this);
+    }
+
+    projectResponseHandler(response) {
+        if(response.status === 200 && this.state.error.length === 0){
+            this.setState({projects : response.data});
+            this.setState({loadingProjects: false});
+            this.setState({showSnackbar: true});
+        }
+    }
+
+    projectErrorHandler(err) {
+        if(err.response){
+            this.setState({loadingProjects: false});
+            this.setState({showSnackbar: true});
+            this.setState({error: err.response.status+ ': ' + err.response.data['status']});
+        }
+    }
+
+    userErrorHandler(err) {
+        if(err.response){
+            this.setState({loadingUser: false});
+            this.setState({showSnackbar: true});
+            this.setState({error: err.response.status+ ': ' + err.response.data['status']});
+        }
+    }
+
+    userResponseHandler(response) {
+        if(response.status === 200){
+            if(response.data.active) {
+                response.data.active = 'Active'
+            } else {
+                response.data.active = 'Inactive'
+            }
+            this.setState({user : response.data});
+            this.setState({loadingUser: false});
+            this.setState({showSnackbar: true});
+        }
     }
 
     getProjects(){
-        this.setState({loadingProjects: true})
-        axios.get(URL+this.props.match.params.id+'/projects')
-            .then(response => {
-                if(response.status === 200){
-                    this.setState({projects : response.data});
-                    this.setState({error: ''});
-                    this.setState({loadingProjects: false});
-                    this.setState({showSnackbar: true});
-                }
-            }).catch((err) => {
-                if(err.response){
-                    this.setState({loadingProjects: false});
-                    this.setState({showSnackbar: true});
-                    this.setState({error: err.response.status+ ': ' + err.response.data['status']});
-                }
-            });
+        this.setState({loadingProjects: true});
+        ApiController.get(URL+this.props.match.params.id+'/projects', this.projectErrorHandler, this.projectResponseHandler)
     }
 
     getUser(){
-        this.setState({loadingUser: true})
-        axios.get(URL+this.props.match.params.id)
-            .then(response => {
-                if(response.status === 200){
-                    if(response.data.active) {
-                        response.data.active = 'Active'
-                    } else {
-                        response.data.active = 'Inactive'
-                    }
-                    this.setState({user : response.data});
-                    this.setState({error: ''});
-                    this.setState({loadingUser: false});
-                    this.setState({showSnackbar: true});
-                }
-            }).catch((err) => {
-            if(err.response){
-                this.setState({loadingUser: false});
-                this.setState({showSnackbar: true});
-                this.setState({error: err.response.status+ ': ' + err.response.data['status']});
-            }
-        });
+        this.setState({loadingUser: true});
+        ApiController.get(URL+this.props.match.params.id, this.userErrorHandler, this.userResponseHandler);
     }
 
     componentDidMount() {
@@ -104,7 +112,7 @@ class Profile extends Component {
                     </div>
                     {this.state.showSnackbar ?
                         <Messagebar
-                            message={this.state.error.length > 0 ? this.state.error : "Profile loaded Successfully"}
+                            message={this.state.error.length > 0 ? this.state.error : "User loaded Successfully"}
                             type={this.state.error.length > 0 ? "error" : "success"}
                         /> : null
                     }

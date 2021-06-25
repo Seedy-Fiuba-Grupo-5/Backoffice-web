@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import {getSetting} from "../../settings";
 import {Table} from "../../Components/Table";
 import {Messagebar} from "../../Components/Messagebar";
 import Slider from '@material-ui/core/Slider'
 import Typography from '@material-ui/core/Typography';
+import ApiController from "../ApiController";
 const URL = getSetting('BACKEND_URL')+'/projects';
 
 class ProjectsTable extends Component {
@@ -18,31 +18,36 @@ class ProjectsTable extends Component {
         };
         this.redirect = this.redirect.bind(this);
         this.handleGoalSliderChange = this.handleGoalSliderChange.bind(this);
+        this.errorHandler = this.errorHandler.bind(this);
+        this.responseHandler = this.responseHandler.bind(this);
+    }
+
+    errorHandler(err) {
+        if(err.response){
+            this.setState({error: err.response.status+': '+err.response.data["status"]});
+            this.setState({showSnackbar : true});
+            this.setState({loading : false});
+        }
+    }
+
+    responseHandler(response) {
+        if(response.status === 200){
+            response.data.map((project) => {
+                delete project['description'];
+                delete project['hashtags'];
+                delete project['image'];
+                return 0;
+            })
+            this.setState({projects : response.data});
+            this.setState({showSnackbar : true});
+            this.setState({loading : false});
+            this.setState({error: ''})
+        }
     }
 
     getProjects(){
         this.setState({loading:true});
-        axios.get(URL)
-            .then(response => {
-                if(response.status === 200){
-                    response.data.map((project) => {
-                        delete project['description'];
-                        delete project['hashtags'];
-                        delete project['image'];
-                        return 0;
-                    })
-                    this.setState({projects : response.data});
-                    this.setState({showSnackbar : true});
-                    this.setState({loading : false});
-                    this.setState({error: ''})
-                }
-            }).catch((err) => {
-            if(err.response){
-                this.setState({error: err.response.status+': '+err.response.data["status"]});
-                this.setState({showSnackbar : true});
-                this.setState({loading : false});
-            }
-        });
+        ApiController.get(URL, this.errorHandler, this.responseHandler);
     }
 
     componentDidMount() {
