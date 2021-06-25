@@ -34,7 +34,7 @@ export class NavBar extends Component {
     }
 
     getProfile(){
-        ApiController.get(URL+localStorage.getItem("token"), this.errorHandler, this.responseHandler)
+        ApiController.get(URL+localStorage.getItem("userId"), this.errorHandler, this.responseHandler)
     }
 
     componentDidMount() {
@@ -59,7 +59,7 @@ export class NavBar extends Component {
                     <li>
                         <div className="user-view">
                             <div className="background" style={{background: '#381242'}}/>
-                            <a href={"/users/"+localStorage.getItem("token")}><img style={{width: "50%"}} src={require('../../seedyfiuba-logo.jpg')} alt="profile"/></a>
+                            <a href={"/users/"+localStorage.getItem("userId")}><img style={{width: "50%"}} src={require('../../seedyfiuba-logo.jpg')} alt="profile"/></a>
                             <span className="white-text name">{this.state.user.name+' '+this.state.user.lastName}</span>
                             <span className="white-text email">{this.state.user.email}</span>
                         </div>
