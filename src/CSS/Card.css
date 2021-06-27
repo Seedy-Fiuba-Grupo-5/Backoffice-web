@@ -39,3 +39,11 @@
     height: 70vh;
     overflow-x: scroll;
 }
+
+.filter-card{
+    margin: 20pt 20pt 20pt 20pt;
+}
+
+.input-field{
+    margin: 20pt 20pt 0 20pt;
+}

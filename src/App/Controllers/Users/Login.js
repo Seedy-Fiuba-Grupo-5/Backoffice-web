@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import {LoginCard} from "../../Components/LoginCard";
 import {getSetting} from "../../settings";
 import {Messagebar} from "../../Components/Messagebar";
+import ApiController from "../ApiController";
 const LOCAL_URL_USERS = getSetting('BACKEND_URL') + '/users/login';
 
 class Login extends Component {
@@ -16,6 +16,8 @@ class Login extends Component {
             showSnackbar: false
         };
         this.login = this.login.bind(this);
+        this.responseHandler = this.responseHandler.bind(this);
+        this.errorHandler = this.errorHandler.bind(this);
     }
 
     updateStates = event => {
@@ -24,28 +26,31 @@ class Login extends Component {
         });
     }
 
+    errorHandler(err) {
+        if(err.response){
+            this.setState({loading: false});
+            this.setState({showSnackbar: true});
+            this.setState({error: err.response.status+ ': ' + err.response.data['status']});
+        }
+    }
+
+    responseHandler(response) {
+        if(response.status === 200){
+            this.setState({error: ''});
+            this.setState({loading: false});
+            this.setState({showSnackbar: true});
+            localStorage.setItem("userId", response.data.id);
+            window.location.href = "/home";
+        }
+    }
+
     login(){
         this.setState({loading: true})
         const newSession = {
             'email': this.state.email,
             'password': this.state.password
         }
-        axios.post(LOCAL_URL_USERS, newSession)
-            .then(response => {
-                if(response.status === 200 && Number.isInteger(response.data.id)){
-                    this.setState({error: ''});
-                    this.setState({loading: false});
-                    this.setState({showSnackbar: true});
-                    localStorage.setItem("token", response.data.id);
-                    window.location.href = "/home";
-                }
-            }).catch((err) => {
-                if(err.response){
-                    this.setState({loading: false});
-                    this.setState({showSnackbar: true});
-                    this.setState({error: err.response.status+ ': ' + err.response.data['status']});
-                }
-        });
+        ApiController.post(LOCAL_URL_USERS, newSession, this.errorHandler, this.responseHandler)
     }
 
     render() {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import "../../../CSS/Text.css";
 import "../../../CSS/Images.css";
 import "../../../CSS/Buttons.css";
@@ -7,6 +6,7 @@ import {SectionList} from "../../Components/SectionList";
 import {getSetting} from "../../settings";
 import {Messagebar} from "../../Components/Messagebar";
 import LinearProgress from '@material-ui/core/LinearProgress';
+import ApiController from "../ApiController";
 const URL = getSetting('BACKEND_URL')+'/projects/';
 
 class ProjectViewer extends Component {
@@ -18,25 +18,30 @@ class ProjectViewer extends Component {
             showSnackbar: false,
             loading: false
         };
+        this.errorHandler = this.errorHandler.bind(this)
+        this.responseHandler = this.responseHandler.bind(this)
+    }
+
+    responseHandler(response) {
+        if(response.status === 200){
+            this.setState({project : response.data});
+            this.setState({showSnackbar : true});
+            this.setState({loading : false});
+            this.setState({error: ''})
+        }
+    }
+
+    errorHandler(err) {
+        if(err.response){
+            this.setState({error: err.response.status+': '+err.response.data["status"]});
+            this.setState({showSnackbar : true});
+            this.setState({loading : false});
+        }
     }
 
     getProject(){
         this.setState({loading : true});
-        axios.get(URL+this.props.match.params.id)
-            .then(response => {
-                if(response.status === 200){
-                    this.setState({project : response.data});
-                    this.setState({showSnackbar : true});
-                    this.setState({loading : false});
-                    this.setState({error: ''})
-                }
-            }).catch((err) => {
-                if(err.response){
-                    this.setState({error: err.response.status+': '+err.response.data["status"]});
-                    this.setState({showSnackbar : true});
-                    this.setState({loading : false});
-                }
-            });
+        ApiController.get(URL+this.props.match.params.id, this.errorHandler, this.responseHandler);
     }
 
     componentDidMount() {

@@ -16,7 +16,7 @@ import ProjectViewer from "../Projects/ProjectViewer";
 import UsersTable from "../Users/UsersTable.js";
 import {NavBar} from "./NavBar";
 import Login from "../Users/Login";
-import {PrivateRoute} from "./PrivateRoute";
+import {PrivateRoute} from "../../Components/PrivateRoute";
 import ProjectsTable from "../Projects/ProjectsTable";
 
 // This site has 3 pages, all of which are rendered

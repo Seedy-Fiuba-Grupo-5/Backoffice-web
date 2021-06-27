@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import {getSetting} from "../../settings";
 import {Table} from "../../Components/Table";
 import {Messagebar} from "../../Components/Messagebar";
+import ApiController from "../ApiController";
 const LOCAL_URL_USERS =  getSetting('BACKEND_URL')+'/users';
 
 class UsersTable extends Component {
@@ -14,32 +14,36 @@ class UsersTable extends Component {
 
         };
         this.redirect = this.redirect.bind(this);
+        this.errorHandler = this.errorHandler.bind(this);
+        this.responseHandler = this.responseHandler.bind(this);
+    }
+
+    responseHandler(response) {
+        response.data.map((user) => {
+            if(user.active) {
+                user.active = 'True'
+            } else {
+                user.active = 'False'
+            }
+            return 0;
+        })
+        this.setState({users : response.data});
+        this.setState({error: ''});
+        this.setState({showSnackbar : true});
+        this.setState({loading : false});
+    }
+
+    errorHandler(err) {
+        if(err.response){
+            this.setState({error: err.response.status+': '+err.response.data["message"]});
+            this.setState({showSnackbar : true});
+            this.setState({loading : false});
+        }
     }
 
     getUsers(){
         this.setState({loading : true});
-        axios.get(LOCAL_URL_USERS)
-            .then(response => response.data)
-            .then((data) => {
-                data.map((user) => {
-                    if(user.active) {
-                        user.active = 'True'
-                    } else {
-                        user.active = 'False'
-                    }
-                    return 0;
-                })
-                this.setState({users : data});
-                this.setState({error: ''});
-                this.setState({showSnackbar : true});
-                this.setState({loading : false});
-            }).catch((err) => {
-            if(err.response){
-                this.setState({error: err.response.status+': '+err.response.data["message"]});
-                this.setState({showSnackbar : true});
-                this.setState({loading : false});
-            }
-        });
+        ApiController.get(LOCAL_URL_USERS, this.errorHandler, this.responseHandler);
     }
 
     redirect(user){
