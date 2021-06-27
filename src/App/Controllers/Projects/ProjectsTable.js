@@ -14,12 +14,15 @@ class ProjectsTable extends Component {
             projects: [],
             showSnackbar: false,
             error: '',
-            goalFilter: [10, 20]
+            goalFilter: [10, 20],
+            typeFilter: ''
         };
         this.redirect = this.redirect.bind(this);
         this.handleGoalSliderChange = this.handleGoalSliderChange.bind(this);
         this.errorHandler = this.errorHandler.bind(this);
         this.responseHandler = this.responseHandler.bind(this);
+        this.getProjects = this.getProjects.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
     errorHandler(err) {
@@ -46,8 +49,10 @@ class ProjectsTable extends Component {
     }
 
     getProjects(){
+        this.setState({projects: []});
         this.setState({loading:true});
-        ApiController.get(URL, this.errorHandler, this.responseHandler);
+        const params = {type: this.state.typeFilter};
+        ApiController.get(URL, this.errorHandler, this.responseHandler, params);
     }
 
     componentDidMount() {
@@ -62,6 +67,11 @@ class ProjectsTable extends Component {
         event.preventDefault();
         this.setState({goalFilter: newValue});
     };
+
+    onChange(event){
+        this.setState({typeFilter: event.target.value});
+    }
+
     render() {
         const items = ['ID', 'Name', 'Type', 'End Date', 'Goal', 'Location']
         return (
@@ -84,11 +94,25 @@ class ProjectsTable extends Component {
                     <div className="col">
                         <div className="card filter-card">
                             <div className="input-field">
-                                <select multiple>
-                                    <option value="" disabled>Project Type</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
+                                <select value={this.state.typeFilter} onChange={this.onChange}>
+                                    <option value="">Project Type</option>
+                                    <option value="Art">Art</option>
+                                    <option value="Comics">Comics</option>
+                                    <option value="Crafts">Crafts</option>
+                                    <option value="Dance">Dance</option>
+                                    <option value="Crafts">Crafts</option>
+                                    <option value="Design">Design</option>
+                                    <option value="Fashion">Fashion</option>
+                                    <option value="Film & Video">Film & Video</option>
+                                    <option value="Food">Food</option>
+                                    <option value="Games">Games</option>
+                                    <option value="Journalism">Journalism</option>
+                                    <option value="Music">Music</option>
+                                    <option value="Photography">Photography</option>
+                                    <option value="Publishing">Publishing</option>
+                                    <option value="Technology">Technology</option>
+                                    <option value="Theater">Theater</option>
+                                    <option value="Other">Other</option>
                                 </select>
                             </div>
                             <div className="input-field">
@@ -102,6 +126,9 @@ class ProjectsTable extends Component {
                                     aria-labelledby="range-slider"
                                 />
                             </div>
+                            <button className="btn waves-effect waves-light login-button" type="submit" name="action" onClick={this.getProjects}>
+                                Filter
+                            </button>
                         </div>
                     </div>
                 </div>

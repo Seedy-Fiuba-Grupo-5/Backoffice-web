@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 class ApiController {
-    static get(url, errorHandler, responseHandler){
+    static get(url, errorHandler, responseHandler, params= {}){
         const body = {
             'token': localStorage.getItem('token'),
             'id': localStorage.getItem('userId')
         }
-        axios.get(url, body)
+        axios.get(url, {params: params}, body)
             .then(response => {
                 if(response.data && response.data.token){
                     localStorage.setItem("token", response.data.token);

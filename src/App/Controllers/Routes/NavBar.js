@@ -26,7 +26,7 @@ export class NavBar extends Component {
 
     errorHandler(err) {
         if(err.response){
-            localStorage.removeItem("token")
+            localStorage.removeItem("token");
             this.setState({error: err.response.status+': '+err.response.data["status"]});
             this.setState({showSnackbar : true});
             window.location.href = "/";
