@@ -33,16 +33,18 @@ export default class ProjectDashboard extends Component {
     responseHandler(response) {
         if(response.status === 200){
             let data = [];
-            for(let i = 0; i < types.length; i++){
+            const iterations = types.length;
+            for(let i = 0; i < iterations; i++){
                 let len = response.data.filter(function(item){
                     return item.type === types[i];
                 }).length;
-                data.append({type: types[i], count: len});
+                data.push({type: types[i], count: len});
             }
             this.setState({report : data});
             this.setState({showSnackbar : true});
             this.setState({loading : false});
-            this.setState({error: ''})
+            this.setState({error: ''});
+
         }
     }
 
@@ -58,8 +60,8 @@ export default class ProjectDashboard extends Component {
     render() {
         return (
             <div className="container" style={{width: "100%", height:"100%"}}>
-                <h1>{types.length}</h1>
-                <ResponsiveContainer width="50%" height="50%">
+                <h5>Amount of Projects by type</h5>
+                <ResponsiveContainer width="100%" height="50%">
                     <BarChart
                         width={500}
                         height={300}
