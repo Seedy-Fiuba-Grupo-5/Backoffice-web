@@ -60,7 +60,7 @@ class ProjectsTable extends Component {
     }
 
     redirect(project) {
-        window.location.replace("/projects/"+project.id);
+        this.props.history.push("/projects/"+project.id);
     }
 
     handleGoalSliderChange = (event, newValue) => {

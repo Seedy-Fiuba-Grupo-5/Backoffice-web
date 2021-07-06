@@ -19,6 +19,8 @@ import Login from "../Users/Login";
 import {PrivateRoute} from "../../Components/PrivateRoute";
 import ProjectsTable from "../Projects/ProjectsTable";
 import ProjectDashboard from "../Projects/ProjectDashboard";
+import AdminsTable from "../Users/AdminsTable";
+import AdminsForm from "../Users/AdminsForm";
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -50,6 +52,8 @@ class Routes extends Component {
                     <PrivateRoute exact path='/dashboards' component={ProjectDashboard} />
                     <PrivateRoute exact path='/users' component={UsersTable} />
                     <PrivateRoute exact path='/users/:id' component={Profile} />
+                    <PrivateRoute exact path='/admins' component={AdminsTable} />
+                    <PrivateRoute exact path='/admins/:id' component={AdminsForm} />
                 </Switch>
             </div>
         );

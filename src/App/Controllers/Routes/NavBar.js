@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {getSetting} from "../../settings";
 import {Messagebar} from "../../Components/Messagebar";
 import ApiController from "../ApiController";
-const URL = getSetting('BACKEND_URL') + '/users/';
+const URL = getSetting('BACKEND_URL') + '/admins/';
 
 export class NavBar extends Component {
     constructor(props) {
@@ -34,7 +34,7 @@ export class NavBar extends Component {
     }
 
     getProfile(){
-        ApiController.get(URL+localStorage.getItem("userId"), this.errorHandler, this.responseHandler)
+        ApiController.get(URL+localStorage.getItem("adminId"), this.errorHandler, this.responseHandler)
     }
 
     componentDidMount() {
@@ -59,13 +59,14 @@ export class NavBar extends Component {
                     <li>
                         <div className="user-view">
                             <div className="background" style={{background: '#381242'}}/>
-                            <a href={"/users/"+localStorage.getItem("userId")}><img style={{width: "50%"}} src={require('../../seedyfiuba-logo.jpg')} alt="profile"/></a>
+                            <a href={"/admins/"+localStorage.getItem("adminId")}><img style={{width: "50%"}} src={require('../../seedyfiuba-logo.jpg')} alt="profile"/></a>
                             <span className="white-text name">{this.state.user.name+' '+this.state.user.lastName}</span>
                             <span className="white-text email">{this.state.user.email}</span>
                         </div>
                     </li>
                     <li><a href={"/projects"}><i className="material-icons">perm_media</i>Projects</a></li>
                     <li><a href={"/users"}><i className="material-icons">supervisor_account</i>Users</a></li>
+                    <li><a href={"/admins"}><i className="material-icons">supervisor_account</i>System Administrators</a></li>
                 </ul>
                 {this.state.showSnackbar ?
                     <Messagebar

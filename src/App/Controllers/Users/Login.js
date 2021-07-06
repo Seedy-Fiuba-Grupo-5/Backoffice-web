@@ -3,7 +3,7 @@ import {LoginCard} from "../../Components/LoginCard";
 import {getSetting} from "../../settings";
 import {Messagebar} from "../../Components/Messagebar";
 import ApiController from "../ApiController";
-const LOCAL_URL_USERS = getSetting('BACKEND_URL') + '/users/login';
+const LOCAL_URL_USERS = getSetting('BACKEND_URL') + '/admins/login';
 
 class Login extends Component {
     constructor(props) {
@@ -39,7 +39,7 @@ class Login extends Component {
             this.setState({error: ''});
             this.setState({loading: false});
             this.setState({showSnackbar: true});
-            localStorage.setItem("userId", response.data.id);
+            localStorage.setItem("adminId", response.data.id);
             window.location.href = "/home";
         }
     }
