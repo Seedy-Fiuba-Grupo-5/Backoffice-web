@@ -4,6 +4,7 @@ import {getSetting} from "../../settings";
 import {SectionList} from "../../Components/SectionList";
 import {Messagebar} from "../../Components/Messagebar";
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Button from '@material-ui/core/Button';
 import { PieChart, Pie, Cell } from 'recharts';
 import ApiController from "../ApiController";
 import ReportGenerator from "../ReportGenerator";
@@ -27,6 +28,7 @@ class Profile extends Component {
         this.errorHandler = this.errorHandler.bind(this);
         this.userResponseHandler = this.userResponseHandler.bind(this);
         this.renderCustomizedLabel = this.renderCustomizedLabel.bind(this);
+        this.blockUser = this.blockUser.bind(this);
     }
 
     projectResponseHandler(response) {
@@ -51,7 +53,7 @@ class Profile extends Component {
             if(response.data.active) {
                 response.data.active = 'Active'
             } else {
-                response.data.active = 'Inactive'
+                response.data.active = 'Blocked'
             }
             this.setState({user : response.data});
             this.setState({loadingUser: false});
@@ -67,6 +69,12 @@ class Profile extends Component {
     getUser(){
         this.setState({loadingUser: true});
         ApiController.get(URL+this.props.match.params.id, this.errorHandler, this.userResponseHandler);
+    }
+
+    blockUser(){
+        const body = {"id_admin": parseInt(localStorage.getItem("adminId"), 10)}
+        this.setState({showSnackbar: false});
+        ApiController.patch(getSetting('BACKEND_URL')+'/admins/users/'+this.props.match.params.id, body,this.errorHandler, this.userResponseHandler);
     }
 
     componentDidMount() {
@@ -99,7 +107,7 @@ class Profile extends Component {
                 {this.state.loadingUser ?
                     <LinearProgress /> : null
                 }
-                <div className="row">
+               <div className="row">
                     <div className="col section-container">
                         <div className="card scroll-card" style={{marginTop:"10vh"}}>
                             {this.state.loadingProjects ?
@@ -119,24 +127,35 @@ class Profile extends Component {
                         </div>
                     </div>
                     <div className="col" style={{marginTop: "10vh", width: "50%"}}>
-                        <SectionList values={items}/>
-                        <PieChart width={800} height={400}>
-                            <Pie
-                                data={this.state.typeReport}
-                                cx={200}
-                                cy={200}
-                                outerRadius={120}
-                                label={this.renderCustomizedLabel}
-                                labelLine={false}
-                                fill="#8884d8"
-                                paddingAngle={5}
-                                dataKey="count"
-                            >
-                                {this.state.typeReport.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                ))}
-                            </Pie>
-                        </PieChart>
+                        <div className="row">
+                            <SectionList values={items}/>
+                        </div>
+                        <div className="row" >
+
+                                {this.state.user.active === 'Active'?
+                                    <Button variant="contained" color="secondary" onClick={this.blockUser}>Block User</Button>:
+                                    <Button variant="contained" color="primary" onClick={this.blockUser}>Unblock User</Button>
+                                }
+                        </div>
+                        <div className="row">
+                            <PieChart width={800} height={400}>
+                                <Pie
+                                    data={this.state.typeReport}
+                                    cx={200}
+                                    cy={150}
+                                    outerRadius={120}
+                                    label={this.renderCustomizedLabel}
+                                    labelLine={false}
+                                    fill="#8884d8"
+                                    paddingAngle={5}
+                                    dataKey="count"
+                                >
+                                    {this.state.typeReport.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                            </PieChart>
+                        </div>
                     </div>
                     {this.state.showSnackbar ?
                         <Messagebar
