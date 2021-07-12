@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {getSetting} from "../../settings";
 import {Table} from "../../Components/Table";
 import {Messagebar} from "../../Components/Messagebar";
-import Slider from '@material-ui/core/Slider'
+import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import ApiController from "../ApiController";
 const URL = getSetting('BACKEND_URL')+'/projects';
@@ -14,8 +14,9 @@ class ProjectsTable extends Component {
             projects: [],
             showSnackbar: false,
             error: '',
-            goalFilter: [10, 20],
-            typeFilter: ''
+            goalFilter: [0, 50000],
+            typeFilter: '',
+            name: ''
         };
         this.redirect = this.redirect.bind(this);
         this.handleGoalSliderChange = this.handleGoalSliderChange.bind(this);
@@ -23,6 +24,7 @@ class ProjectsTable extends Component {
         this.responseHandler = this.responseHandler.bind(this);
         this.getProjects = this.getProjects.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.nameChange = this.nameChange.bind(this);
     }
 
     errorHandler(err) {
@@ -51,7 +53,12 @@ class ProjectsTable extends Component {
     getProjects(){
         this.setState({projects: []});
         this.setState({loading:true});
-        const params = {type: this.state.typeFilter};
+        const params = {
+            type: this.state.typeFilter,
+            maxGoal: Math.max.apply(null, this.state.goalFilter),
+            minGoal: Math.min.apply(null, this.state.goalFilter),
+            name: this.state.name
+        };
         ApiController.get(URL, this.errorHandler, this.responseHandler, params);
     }
 
@@ -72,8 +79,12 @@ class ProjectsTable extends Component {
         this.setState({typeFilter: event.target.value});
     }
 
+    nameChange(event){
+        this.setState({name: event.target.value});
+    }
+
     render() {
-        const items = ['ID', 'Name', 'Type', 'End Date', 'Goal', 'Location']
+        const items = ['ID', 'Name', 'Type', 'Goal', 'End Date', 'Location']
         return (
             <div className="container">
                 <div className="h1" style={{marginTop:"20pt"}}>
@@ -124,6 +135,15 @@ class ProjectsTable extends Component {
                                     onChange={this.handleGoalSliderChange}
                                     valueLabelDisplay="auto"
                                     aria-labelledby="range-slider"
+                                    max="50000"
+                                />
+                                <input
+                                    placeholder="Name"
+                                    id="first_name"
+                                    type="text"
+                                    className="validate"
+                                    value={this.state.name}
+                                    onChange={this.nameChange}
                                 />
                             </div>
                             <button className="btn waves-effect waves-light login-button" type="submit" name="action" onClick={this.getProjects}>
