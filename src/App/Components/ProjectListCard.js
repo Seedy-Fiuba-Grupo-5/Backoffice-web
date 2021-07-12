@@ -7,7 +7,7 @@ export class ProjectListCard extends Component {
         return (
             <div className="card medium project-card">
                 <div className="card-image">
-                    <img src={require('../../App/seedyfiuba-logo.png')} alt="default logo" className="image"/>
+                    <img src={require('../../App/seedyfiuba-logo.jpg')} alt="default logo" className="image"/>
                 </div>
                 <div className="card-content white-text">
                     <span className="card-title">{this.props.title}</span>

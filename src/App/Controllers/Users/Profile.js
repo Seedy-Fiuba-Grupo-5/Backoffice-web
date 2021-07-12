@@ -1,54 +1,99 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import {ProjectListCard} from "../../Components/ProjectListCard";
 import {getSetting} from "../../settings";
 import {SectionList} from "../../Components/SectionList";
+import {Messagebar} from "../../Components/Messagebar";
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Button from '@material-ui/core/Button';
+import { PieChart, Pie, Cell } from 'recharts';
+import ApiController from "../ApiController";
+import ReportGenerator from "../ReportGenerator";
 const URL = getSetting('BACKEND_URL')+'/users/';
+
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
             projects: [],
-            user: ""
+            user: "",
+            loadingProjects: false,
+            loadingUser: false,
+            error: '',
+            showSnackbar: false,
+            typeReport: []
         };
+        this.projectResponseHandler = this.projectResponseHandler.bind(this);
+        this.errorHandler = this.errorHandler.bind(this);
+        this.userResponseHandler = this.userResponseHandler.bind(this);
+        this.renderCustomizedLabel = this.renderCustomizedLabel.bind(this);
+        this.blockUser = this.blockUser.bind(this);
+    }
+
+    projectResponseHandler(response) {
+        if(response.status === 200 && this.state.error.length === 0){
+            this.setState({projects : response.data});
+            this.setState({typeReport: ReportGenerator.createTypeReport(this.state.projects)});
+            this.setState({loadingProjects: false});
+            this.setState({showSnackbar: true});
+        }
+    }
+
+    errorHandler(err) {
+        if(err.response){
+            this.setState({loadingUser: false});
+            this.setState({showSnackbar: true});
+            this.setState({error: err.response.status+ ': ' + err.response.data['status']});
+        }
+    }
+
+    userResponseHandler(response) {
+        if(response.status === 200){
+            if(response.data.active) {
+                response.data.active = 'Active'
+            } else {
+                response.data.active = 'Blocked'
+            }
+            this.setState({user : response.data});
+            this.setState({loadingUser: false});
+            this.setState({showSnackbar: true});
+        }
     }
 
     getProjects(){
-        axios.get(URL+this.props.match.params.id+'/projects')
-            .then(response => {
-                if(response.status === 200){
-                    this.setState({projects : response.data})
-                }
-            }).catch((err) => {
-                if(err.response){
-                    alert(err.response.status+': '+err.response.data)
-                }
-            });
+        this.setState({loadingProjects: true});
+        ApiController.get(URL+this.props.match.params.id+'/projects', this.errorHandler, this.projectResponseHandler)
     }
 
     getUser(){
-        axios.get(URL+this.props.match.params.id)
-            .then(response => {
-                if(response.status === 200){
-                    if(response.data.active) {
-                        response.data.active = 'Active'
-                    } else {
-                        response.data.active = 'Inactive'
-                    }
-                    this.setState({user : response.data})
-                }
-            }).catch((err) => {
-            if(err.response){
-                alert(err.response.status+': '+err.response.data)
-            }
-        });
+        this.setState({loadingUser: true});
+        ApiController.get(URL+this.props.match.params.id, this.errorHandler, this.userResponseHandler);
+    }
+
+    blockUser(){
+        const body = {"id_admin": parseInt(localStorage.getItem("adminId"), 10)}
+        this.setState({showSnackbar: false});
+        ApiController.patch(getSetting('BACKEND_URL')+'/admins/users/'+this.props.match.params.id, body,this.errorHandler, this.userResponseHandler);
     }
 
     componentDidMount() {
         this.getProjects();
         this.getUser();
     }
+
+    renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+        const RADIAN = Math.PI / 180;
+        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+        const x = cx + radius * Math.cos(-midAngle * RADIAN);
+        const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+        return (
+            <text x={x} y={y} fill="black" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+                {this.state.typeReport[index]['count'] > 0 ? this.state.typeReport[index]['type'] : null}
+            </text>
+        );
+    };
 
     render() {
         const items = [
@@ -59,26 +104,67 @@ class Profile extends Component {
 
         return (
             <div className="container">
-                <div className="row">
+                {this.state.loadingUser ?
+                    <LinearProgress /> : null
+                }
+               <div className="row">
                     <div className="col section-container">
                         <div className="card scroll-card" style={{marginTop:"10vh"}}>
-                            <div className="card-content">
-                                {this.state.projects.length > 0 ? this.state.projects.map((project) => {
-                                    return (
-                                        <ProjectListCard title={project.name} text={project.description} redirectLink={'/projects/'+project.id}/>
-                                    );
-                                }) :
-                                    <div className="h1" style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100%'}}>
-                                        This User doesn't have any Projects yet
-                                    </div>
-                                }
-                            </div>
+                            {this.state.loadingProjects ?
+                                <LinearProgress /> :
+                                <div className="card-content">
+                                    {this.state.projects.length > 0 ? this.state.projects.map((project) => {
+                                            return (
+                                                <ProjectListCard title={project.name} text={project.description} redirectLink={'/projects/'+project.id}/>
+                                            );
+                                        }) :
+                                        <div className="h1" style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100%'}}>
+                                            This User doesn't have any Projects yet
+                                        </div>
+                                    }
+                                </div>
+                            }
                         </div>
                     </div>
-                    <div className="col" style={{marginTop: "10vh"}}>
-                        <SectionList values={items}/>
+                    <div className="col" style={{marginTop: "10vh", width: "50%"}}>
+                        <div className="row">
+                            <SectionList values={items}/>
+                        </div>
+                        <div className="row" >
+
+                                {this.state.user.active === 'Active'?
+                                    <Button variant="contained" color="secondary" onClick={this.blockUser}>Block User</Button>:
+                                    <Button variant="contained" color="primary" onClick={this.blockUser}>Unblock User</Button>
+                                }
+                        </div>
+                        <div className="row">
+                            <PieChart width={800} height={400}>
+                                <Pie
+                                    data={this.state.typeReport}
+                                    cx={200}
+                                    cy={150}
+                                    outerRadius={120}
+                                    label={this.renderCustomizedLabel}
+                                    labelLine={false}
+                                    fill="#8884d8"
+                                    paddingAngle={5}
+                                    dataKey="count"
+                                >
+                                    {this.state.typeReport.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                            </PieChart>
+                        </div>
                     </div>
+                    {this.state.showSnackbar ?
+                        <Messagebar
+                            message={this.state.error.length > 0 ? this.state.error : "User loaded Successfully"}
+                            type={this.state.error.length > 0 ? "error" : "success"}
+                        /> : null
+                    }
                 </div>
+
             </div>
         );
     }

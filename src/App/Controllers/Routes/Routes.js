@@ -16,8 +16,11 @@ import ProjectViewer from "../Projects/ProjectViewer";
 import UsersTable from "../Users/UsersTable.js";
 import {NavBar} from "./NavBar";
 import Login from "../Users/Login";
-import {PrivateRoute} from "./PrivateRoute";
-import ProjectsList from "../Projects/ProjectsList";
+import {PrivateRoute} from "../../Components/PrivateRoute";
+import ProjectsTable from "../Projects/ProjectsTable";
+import ProjectDashboard from "../Projects/ProjectDashboard";
+import AdminsTable from "../Users/AdminsTable";
+import AdminsForm from "../Users/AdminsForm";
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -44,10 +47,13 @@ class Routes extends Component {
                         <Redirect to={{pathname: "/home"}}/> : <Login/>
                     }/>
                     <PrivateRoute exact path='/home' component={Home} />
-                    <PrivateRoute exact path='/projects' component={ProjectsList} />
+                    <PrivateRoute exact path='/projects' component={ProjectsTable} />
                     <PrivateRoute exact path='/projects/:id' component={ProjectViewer} />
+                    <PrivateRoute exact path='/dashboards' component={ProjectDashboard} />
                     <PrivateRoute exact path='/users' component={UsersTable} />
                     <PrivateRoute exact path='/users/:id' component={Profile} />
+                    <PrivateRoute exact path='/admins' component={AdminsTable} />
+                    <PrivateRoute exact path='/admins/:id' component={AdminsForm} />
                 </Switch>
             </div>
         );

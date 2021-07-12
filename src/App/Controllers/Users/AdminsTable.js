@@ -3,15 +3,16 @@ import {getSetting} from "../../settings";
 import {Table} from "../../Components/Table";
 import {Messagebar} from "../../Components/Messagebar";
 import ApiController from "../ApiController";
-const LOCAL_URL_USERS =  getSetting('BACKEND_URL')+'/users';
+const LOCAL_URL_USERS =  getSetting('BACKEND_URL')+'/admins';
 
-class UsersTable extends Component {
+class AdminsTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: [],
+            admins: [],
             error: '',
-
+            loading: false,
+            showSnackbar: false
         };
         this.redirect = this.redirect.bind(this);
         this.errorHandler = this.errorHandler.bind(this);
@@ -19,15 +20,7 @@ class UsersTable extends Component {
     }
 
     responseHandler(response) {
-        response.data.map((user) => {
-            if(user.active) {
-                user.active = 'True'
-            } else {
-                user.active = 'False'
-            }
-            return 0;
-        })
-        this.setState({users : response.data});
+        this.setState({admins : response.data});
         this.setState({error: ''});
         this.setState({showSnackbar : true});
         this.setState({loading : false});
@@ -35,37 +28,42 @@ class UsersTable extends Component {
 
     errorHandler(err) {
         if(err.response){
-            this.setState({error: err.response.status+': '+err.response.data["message"]});
+            this.setState({error: err.response.status+': '+err.response.data["status"]});
             this.setState({showSnackbar : true});
             this.setState({loading : false});
         }
     }
 
-    getUsers(){
+    getAdmins(){
         this.setState({loading : true});
         ApiController.get(LOCAL_URL_USERS, this.errorHandler, this.responseHandler);
     }
 
-    redirect(user){
-        this.props.history.push("/users/"+user.id);
+    redirect(admin){
+        this.props.history.push("/admins/"+admin.id);
     }
 
     componentDidMount() {
-        this.getUsers();
+        this.getAdmins();
     }
 
     render() {
-        const items = ['ID', 'Name', 'Last Name', 'E-mail', 'Is Active']
+        const items = ['ID', 'Name', 'Last Name', 'E-mail']
         return (
             <div className="container">
                 <div className="h1" style={{marginTop:"20pt"}}>
-                    Users Table
+                    System Administrators Table
+                    <a className="btn-floating btn-large waves-effect waves-light"
+                       style={{backgroundColor: "#4b1e4d", float: "right"}}
+                        href={"/admins/new"}
+                    ><i
+                        className="material-icons">add</i></a>
                 </div>
                 <div className="scroll-card">
-                    <Table items={items} values={this.state.users} redirect={this.redirect} loading={this.state.loading}/>
+                    <Table items={items} values={this.state.admins} redirect={this.redirect} loading={this.state.loading}/>
                     {this.state.showSnackbar ?
                         <Messagebar
-                            message={this.state.error.length > 0 ? this.state.error : "Users loaded successfully"}
+                            message={this.state.error.length > 0 ? this.state.error : "Admins loaded successfully"}
                             type={this.state.error.length > 0 ? "error" : "success"}
                         /> : null
                     }
@@ -75,4 +73,4 @@ class UsersTable extends Component {
     }
 }
 
-export default UsersTable;
+export default AdminsTable;
