@@ -41,6 +41,8 @@ class ServiceManager extends Component {
             window.location.href = "https://app.datadoghq.com/dash/host/5126263560?from_ts=1626373168146&to_ts=1626376768146&live=true";
         } else if (service.url === "https://seedy-fiuba-backend-projects.herokuapp.com"){
             window.location.href = "https://app.datadoghq.com/dash/host/5147736386?from_ts=1626555657911&to_ts=1626559257911&live=true";
+        } else if (service.url === "https://seedy-fiuba-backend-payments.herokuapp.com"){
+            window.location.href = "https://app.datadoghq.com/dash/host/5148044250?from_ts=1626615523376&to_ts=1626619123376&live=true";
         }
     }
 
