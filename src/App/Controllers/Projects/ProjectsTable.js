@@ -16,7 +16,8 @@ class ProjectsTable extends Component {
             error: '',
             goalFilter: [0, 50000],
             typeFilter: '',
-            name: ''
+            name: '',
+            metrics: {}
         };
         this.redirect = this.redirect.bind(this);
         this.handleGoalSliderChange = this.handleGoalSliderChange.bind(this);
@@ -25,6 +26,7 @@ class ProjectsTable extends Component {
         this.getProjects = this.getProjects.bind(this);
         this.onChange = this.onChange.bind(this);
         this.nameChange = this.nameChange.bind(this);
+        this.metricsResponseHandler = this.metricsResponseHandler.bind(this);
     }
 
     errorHandler(err) {
@@ -50,6 +52,12 @@ class ProjectsTable extends Component {
         }
     }
 
+    metricsResponseHandler(response){
+        if(response.status === 200){
+            this.setState({metrics : response.data});
+        }
+    }
+
     getProjects(){
         this.setState({projects: []});
         this.setState({loading:true});
@@ -62,8 +70,13 @@ class ProjectsTable extends Component {
         ApiController.get(URL, this.errorHandler, this.responseHandler, params);
     }
 
+    getMetrics(){
+        ApiController.get(URL+'/metrics', this.errorHandler, this.metricsResponseHandler);
+    }
+
     componentDidMount() {
         this.getProjects();
+        this.getMetrics();
     }
 
     redirect(project) {
@@ -149,6 +162,21 @@ class ProjectsTable extends Component {
                             <button className="btn waves-effect waves-light login-button" type="submit" name="action" onClick={this.getProjects}>
                                 Filter
                             </button>
+                        </div>
+                        <div className="card card-metrics">
+                            <div className="card-content white-text">
+                                <span className="card-title">Most Popular Project Type: {this.state.metrics['most_popular_type']}</span>
+                            </div>
+                        </div>
+                        <div className="card card-metrics">
+                            <div className="card-content white-text">
+                                <span className="card-title">Average Project Goal: {this.state.metrics['avg_goal']}</span>
+                            </div>
+                        </div>
+                        <div className="card card-metrics">
+                            <div className="card-content white-text">
+                                <span className="card-title">Average Project Duration: {this.state.metrics['avg_duration']}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
