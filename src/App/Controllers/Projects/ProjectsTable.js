@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import {getSetting} from "../../settings";
 import {Table} from "../../Components/Table";
 import {Messagebar} from "../../Components/Messagebar";
-import Slider from '@material-ui/core/Slider';
-import Typography from '@material-ui/core/Typography';
 import ApiController from "../ApiController";
 const URL = getSetting('BACKEND_URL')+'/projects';
 
@@ -14,13 +12,15 @@ class ProjectsTable extends Component {
             projects: [],
             showSnackbar: false,
             error: '',
-            goalFilter: [0, 50000],
+            minGoal: 0,
+            maxGoal: 10000,
             typeFilter: '',
             name: '',
             metrics: {}
         };
         this.redirect = this.redirect.bind(this);
-        this.handleGoalSliderChange = this.handleGoalSliderChange.bind(this);
+        this.handleMinGoalChange = this.handleMinGoalChange.bind(this);
+        this.handleMaxGoalChange = this.handleMaxGoalChange.bind(this);
         this.errorHandler = this.errorHandler.bind(this);
         this.responseHandler = this.responseHandler.bind(this);
         this.getProjects = this.getProjects.bind(this);
@@ -43,6 +43,9 @@ class ProjectsTable extends Component {
                 delete project['description'];
                 delete project['hashtags'];
                 delete project['image'];
+                delete project['video'];
+                delete project['path'];
+                delete project['seer'];
                 return 0;
             })
             this.setState({projects : response.data});
@@ -63,8 +66,8 @@ class ProjectsTable extends Component {
         this.setState({loading:true});
         const params = {
             type: this.state.typeFilter,
-            maxGoal: Math.max.apply(null, this.state.goalFilter),
-            minGoal: Math.min.apply(null, this.state.goalFilter),
+            maxGoal: this.state.maxGoal,
+            minGoal: this.state.minGoal,
             name: this.state.name
         };
         ApiController.get(URL, this.errorHandler, this.responseHandler, params);
@@ -83,9 +86,14 @@ class ProjectsTable extends Component {
         this.props.history.push("/projects/"+project.id);
     }
 
-    handleGoalSliderChange = (event, newValue) => {
+    handleMinGoalChange = (event) => {
         event.preventDefault();
-        this.setState({goalFilter: newValue});
+        this.setState({minGoal: event.target.value});
+    };
+
+    handleMaxGoalChange = (event) => {
+        event.preventDefault();
+        this.setState({maxGoal: event.target.value});
     };
 
     onChange(event){
@@ -97,7 +105,7 @@ class ProjectsTable extends Component {
     }
 
     render() {
-        const items = ['ID', 'Name', 'Type', 'Goal', 'End Date', 'Location']
+        const items = ['ID', 'Name', 'Type', 'Goal', 'End Date', 'Location', 'Created On']
         return (
             <div className="container">
                 <div className="h1" style={{marginTop:"20pt"}}>
@@ -140,16 +148,28 @@ class ProjectsTable extends Component {
                                 </select>
                             </div>
                             <div className="input-field">
-                                <Typography id="range-slider" gutterBottom>
-                                    Goal range
-                                </Typography>
-                                <Slider
-                                    value={this.state.goalFilter}
-                                    onChange={this.handleGoalSliderChange}
-                                    valueLabelDisplay="auto"
-                                    aria-labelledby="range-slider"
-                                    max="50000"
-                                />
+                                <div className="row">
+                                    <div className="col">
+                                        <input
+                                            placeholder="Min. Goal"
+                                            id="minGoal"
+                                            type="number"
+                                            className="validate"
+                                            value={this.state.minGoal}
+                                            onChange={this.handleMinGoalChange}
+                                        />
+                                    </div>
+                                    <div className="col">
+                                        <input
+                                            placeholder="Max. Goal"
+                                            id="maxGoal"
+                                            type="number"
+                                            className="validate"
+                                            value={this.state.maxGoal}
+                                            onChange={this.handleMaxGoalChange}
+                                        />
+                                    </div>
+                                </div>
                                 <input
                                     placeholder="Name"
                                     id="first_name"
@@ -159,7 +179,7 @@ class ProjectsTable extends Component {
                                     onChange={this.nameChange}
                                 />
                             </div>
-                            <button className="btn waves-effect waves-light login-button" type="submit" name="action" onClick={this.getProjects}>
+                            <button className="btn waves-effect waves-light" style={{backgroundColor: "#4b1e4d"}} type="submit" name="action" onClick={this.getProjects}>
                                 Filter
                             </button>
                         </div>
@@ -186,3 +206,14 @@ class ProjectsTable extends Component {
 }
 
 export default ProjectsTable;
+
+/*
+
+                                <Slider
+                                    value={this.state.goalFilter}
+                                    onChange={this.handleGoalSliderChange}
+                                    valueLabelDisplay="auto"
+                                    aria-labelledby="range-slider"
+                                    max="50000"
+                                />
+ */

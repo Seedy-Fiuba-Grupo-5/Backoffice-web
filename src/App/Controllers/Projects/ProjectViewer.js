@@ -16,7 +16,9 @@ class ProjectViewer extends Component {
             project: '',
             error: '',
             showSnackbar: false,
-            loading: false
+            loading: false,
+            owner: '',
+            payments: ''
         };
         this.errorHandler = this.errorHandler.bind(this)
         this.responseHandler = this.responseHandler.bind(this)
@@ -25,6 +27,8 @@ class ProjectViewer extends Component {
     responseHandler(response) {
         if(response.status === 200){
             this.setState({project : response.data});
+            this.setState({owner : response.data.user});
+            this.setState({payments : response.data.payments});
             this.setState({showSnackbar : true});
             this.setState({loading : false});
             this.setState({error: ''})
@@ -49,12 +53,23 @@ class ProjectViewer extends Component {
     }
 
     render(){
-        const items = [
+        const project_items = [
             ["Type","class", this.state.project.type],
             ["Goal","attach_money", this.state.project.goal],
             ["End Date","date_range", this.state.project.endDate],
-            ["Location","location_city", this.state.project.location]
+            ["Created On","date_range", this.state.project.createdOn],
+            ["Location","location_city", this.state.project.location],
+            ["Seer Id","account_box", this.state.project.seer],
+            ["Description","border_color", this.state.project.description]
         ];
+        const user_items = [
+            ["First Name","account_box", this.state.owner.name],
+            ["Last Name","account_box", this.state.owner.lastName],
+            ["E-mail","email", this.state.owner.email],
+            ["Creation Status","account_balance_wallet", this.state.payments.creationStatus],
+            ["Balance","account_balance_wallet", this.state.payments.balance]
+        ]
+
         return(
             <div className="container">
                 {this.state.loading ?
@@ -65,16 +80,13 @@ class ProjectViewer extends Component {
                 </div>
                 <div className="row">
                     <div className="col">
-                        <div className="card-image">
-                            <img src={require('../../seedyfiuba-logo.jpg')} alt="default logo" className="image image-border"/>
-                        </div>
-                        <div className="card large card-view">
-                            <div className="card-content">
-                                <p>{this.state.project.description}</p>
-                            </div>
-                        </div>
+                        <h1>Project</h1>
+                        <SectionList values={project_items}/>
                     </div>
-                    <SectionList values={items}/>
+                    <div className="col">
+                        <h1>Owner/Payments</h1>
+                        <SectionList values={user_items}/>
+                    </div>
                 </div>
                 {this.state.showSnackbar ?
                     <Messagebar
