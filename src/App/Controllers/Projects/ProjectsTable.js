@@ -46,6 +46,10 @@ class ProjectsTable extends Component {
                 delete project['video'];
                 delete project['path'];
                 delete project['seer'];
+                delete project['lat'];
+                delete project['lon'];
+                delete project['rating'];
+                delete project['favorites'];
                 return 0;
             })
             this.setState({projects : response.data});
@@ -206,14 +210,3 @@ class ProjectsTable extends Component {
 }
 
 export default ProjectsTable;
-
-/*
-
-                                <Slider
-                                    value={this.state.goalFilter}
-                                    onChange={this.handleGoalSliderChange}
-                                    valueLabelDisplay="auto"
-                                    aria-labelledby="range-slider"
-                                    max="50000"
-                                />
- */

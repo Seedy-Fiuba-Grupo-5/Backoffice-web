@@ -22,6 +22,7 @@ import ProjectDashboard from "../Projects/ProjectDashboard";
 import AdminsTable from "../Users/AdminsTable";
 import AdminsForm from "../Users/AdminsForm";
 import ServiceManager from "../ServiceManager";
+import TransactionsTable from "../TransactionsTable";
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -56,6 +57,7 @@ class Routes extends Component {
                     <PrivateRoute exact path='/admins' component={AdminsTable} />
                     <PrivateRoute exact path='/admins/:id' component={AdminsForm} />
                     <PrivateRoute exact path='/services' component={ServiceManager} />
+                    <PrivateRoute exact path='/transactions' component={TransactionsTable} />
                 </Switch>
             </div>
         );
