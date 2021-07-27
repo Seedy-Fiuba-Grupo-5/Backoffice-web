@@ -7,6 +7,7 @@ import {getSetting} from "../../settings";
 import {Messagebar} from "../../Components/Messagebar";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import ApiController from "../ApiController";
+import Pagination from '@material-ui/lab/Pagination';
 const URL = getSetting('BACKEND_URL')+'/projects/';
 
 class ProjectViewer extends Component {
@@ -18,7 +19,8 @@ class ProjectViewer extends Component {
             showSnackbar: false,
             loading: false,
             owner: '',
-            payments: ''
+            payments: '',
+            showVideo: false
         };
         this.errorHandler = this.errorHandler.bind(this)
         this.responseHandler = this.responseHandler.bind(this)
@@ -42,6 +44,14 @@ class ProjectViewer extends Component {
             this.setState({loading : false});
         }
     }
+
+    handleChange = (event, value) => {
+        if(value === 1){
+            this.setState({showVideo: false});
+        } else {
+            this.setState({showVideo: true});
+        }
+    };
 
     getProject(){
         this.setState({loading : true});
@@ -80,12 +90,16 @@ class ProjectViewer extends Component {
                 </div>
                 <div className="row">
                     <div className="col">
-                        <h1>Project</h1>
-                        <SectionList values={project_items}/>
-                    </div>
-                    <div className="col">
+                        {this.state.showVideo ?
+                            <video ref="vidRef" src={this.state.project.video}/> : <img src={this.state.project.image} alt="img" />
+                        }
+                        <Pagination count={2} style={{backgroundColor: "rgba(52, 52, 52, 0)"}} variant="outlined" onChange={this.handleChange}/>
                         <h1>Owner/Payments</h1>
                         <SectionList values={user_items}/>
+                    </div>
+                    <div className="col">
+                        <h1>Project</h1>
+                        <SectionList values={project_items}/>
                     </div>
                 </div>
                 {this.state.showSnackbar ?

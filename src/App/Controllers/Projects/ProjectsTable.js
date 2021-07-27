@@ -194,12 +194,12 @@ class ProjectsTable extends Component {
                         </div>
                         <div className="card card-metrics">
                             <div className="card-content white-text">
-                                <span className="card-title">Average Project Goal: {this.state.metrics['avg_goal']}</span>
+                                <span className="card-title">Average Project Goal: {Math.round(this.state.metrics['avg_goal'] * 100) / 100}</span>
                             </div>
                         </div>
                         <div className="card card-metrics">
                             <div className="card-content white-text">
-                                <span className="card-title">Average Project Duration: {this.state.metrics['avg_duration']}</span>
+                                <span className="card-title">Average Project Duration (Months): {Math.round(this.state.metrics['avg_duration'])}</span>
                             </div>
                         </div>
                     </div>
