@@ -8,6 +8,7 @@ import {Messagebar} from "../../Components/Messagebar";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import ApiController from "../ApiController";
 import Pagination from '@material-ui/lab/Pagination';
+import ReactPlayer from 'react-player'
 const URL = getSetting('BACKEND_URL')+'/projects/';
 
 class ProjectViewer extends Component {
@@ -91,7 +92,7 @@ class ProjectViewer extends Component {
                 <div className="row">
                     <div className="col">
                         {this.state.showVideo ?
-                            <video ref="vidRef" src={this.state.project.video}/> : <img src={this.state.project.image} alt="img" />
+                            <ReactPlayer url={this.state.project.video} controls = {true}/> : <img src={this.state.project.image} alt="img" />
                         }
                         <Pagination count={2} style={{backgroundColor: "rgba(52, 52, 52, 0)"}} variant="outlined" onChange={this.handleChange}/>
                         <h1>Owner/Payments</h1>
