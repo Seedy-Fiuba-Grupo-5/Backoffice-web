@@ -8,6 +8,7 @@ import {Messagebar} from "../../Components/Messagebar";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import ApiController from "../ApiController";
 import Pagination from '@material-ui/lab/Pagination';
+import Rating from '@material-ui/lab/Rating';
 import ReactPlayer from 'react-player'
 const URL = getSetting('BACKEND_URL')+'/projects/';
 
@@ -91,12 +92,29 @@ class ProjectViewer extends Component {
                 </div>
                 <div className="row">
                     <div className="col">
-                        {this.state.showVideo ?
-                            <ReactPlayer url={this.state.project.video} controls = {true}/> : <img src={this.state.project.image} alt="img" />
-                        }
-                        <Pagination count={2} style={{backgroundColor: "rgba(52, 52, 52, 0)"}} variant="outlined" onChange={this.handleChange}/>
-                        <h1>Owner/Payments</h1>
-                        <SectionList values={user_items}/>
+                        <div className="row">
+                            {this.state.showVideo ?
+                                <ReactPlayer url={this.state.project.video} controls = {true}/> : <img src={this.state.project.image} alt="img" />
+                            }
+                            {this.state.project.video ?
+                                <Pagination count={2} style={{backgroundColor: "rgba(52, 52, 52, 0)"}} variant="outlined" onChange={this.handleChange}/> : null
+                            }
+                        </div>
+                        <div className="row">
+                            {this.state.project.rating ?
+                                <Rating
+                                    name="size-large"
+                                    size="large"
+                                    value={this.state.project.rating}
+                                    precision={0.5}
+                                    readOnly
+                                /> : null
+                            }
+                        </div>
+                        <div className="row">
+                            <h1>Owner/Payments</h1>
+                            <SectionList values={user_items}/>
+                        </div>
                     </div>
                     <div className="col">
                         <h1>Project</h1>
