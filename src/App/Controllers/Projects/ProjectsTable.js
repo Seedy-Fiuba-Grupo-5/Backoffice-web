@@ -3,6 +3,8 @@ import {getSetting} from "../../settings";
 import {Table} from "../../Components/Table";
 import {Messagebar} from "../../Components/Messagebar";
 import ApiController from "../ApiController";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 const URL = getSetting('BACKEND_URL')+'/projects';
 
 class ProjectsTable extends Component {
@@ -130,28 +132,30 @@ class ProjectsTable extends Component {
                     <div className="col">
                         <div className="card filter-card">
                             <div className="input-field">
-                                <select value={this.state.typeFilter} onChange={this.onChange}>
-                                    <option value="">Project Type</option>
-                                    <option value="Art">Art</option>
-                                    <option value="Comics">Comics</option>
-                                    <option value="Crafts">Crafts</option>
-                                    <option value="Dance">Dance</option>
-                                    <option value="Crafts">Crafts</option>
-                                    <option value="Design">Design</option>
-                                    <option value="Fashion">Fashion</option>
-                                    <option value="Film & Video">Film & Video</option>
-                                    <option value="Food">Food</option>
-                                    <option value="Games">Games</option>
-                                    <option value="Journalism">Journalism</option>
-                                    <option value="Music">Music</option>
-                                    <option value="Photography">Photography</option>
-                                    <option value="Publishing">Publishing</option>
-                                    <option value="Technology">Technology</option>
-                                    <option value="Theater">Theater</option>
-                                    <option value="Other">Other</option>
-                                </select>
+                                <h5>Project Type</h5>
+                                <Select value={this.state.typeFilter} onChange={this.onChange} style={{width:'150pt'}}>
+                                    <MenuItem value="">All</MenuItem>
+                                    <MenuItem value="Art">Art</MenuItem>
+                                    <MenuItem value="Comics">Comics</MenuItem>
+                                    <MenuItem value="Crafts">Crafts</MenuItem>
+                                    <MenuItem value="Dance">Dance</MenuItem>
+                                    <MenuItem value="Crafts">Crafts</MenuItem>
+                                    <MenuItem value="Design">Design</MenuItem>
+                                    <MenuItem value="Fashion">Fashion</MenuItem>
+                                    <MenuItem value="Film & Video">Film & Video</MenuItem>
+                                    <MenuItem value="Food">Food</MenuItem>
+                                    <MenuItem value="Games">Games</MenuItem>
+                                    <MenuItem value="Journalism">Journalism</MenuItem>
+                                    <MenuItem value="Music">Music</MenuItem>
+                                    <MenuItem value="Photography">Photography</MenuItem>
+                                    <MenuItem value="Publishing">Publishing</MenuItem>
+                                    <MenuItem value="Technology">Technology</MenuItem>
+                                    <MenuItem value="Theater">Theater</MenuItem>
+                                    <MenuItem value="Other">Other</MenuItem>
+                                </Select>
                             </div>
                             <div className="input-field">
+                                <h5>Goal</h5>
                                 <div className="row">
                                     <div className="col">
                                         <input
