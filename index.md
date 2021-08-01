@@ -5,7 +5,11 @@ El siguiente documento busca explicar a nuevos usuarios el funcionamiento del [B
 1. [Login](#login)
 2. [Pantalla de Inicio](#pantalla-de-inicio)
 3. [Gestión de Administradores](#gestión-de-administradores)
-4. [Fourth Example](#fourth-examplehttpwwwfourthexamplecom)
+4. [Gestión de Proyectos](#gestión-de-proyectos)
+5. [Gestión de Usuarios](#gestión-de-usuarios)
+6. [Dashboards](#dashboards)
+7. [Gestión de Servicios](#gestión-de-servicios)
+8. [Gestión de Transacciones](#gestión-de-transacciones)
 
 
 ## Login
@@ -24,36 +28,27 @@ En la parte superior derecha encontramos un botón con un símbolo más que redi
 También, al apretar en las filas de la tabla somos redireccionados al perfil del administrador en donde se muestra la información correspondiente al mismo así como su Id en la parte superior de la pantalla.
 ![image](https://user-images.githubusercontent.com/38841602/127775435-a8e97372-bd15-4cb9-9437-035319a4a086.png)
 
-## [Fourth Example](http://www.fourthexample.com) 
+## Gestión de Proyectos
+Ingresando a la sección Projects podemos visualizar una tabla que muestra todos los proyectos creados. A la misma le podemos aplicar distintos filtros: por Tipo, por Goal y por Nombre.También, podemos observar métricas acerca de los proyectos existentes en la aplicación.
+![image](https://user-images.githubusercontent.com/38841602/127775727-30fc3a4a-34df-4f1a-b1f5-49930f451adf.png)
+Al apretar en alguna de las filas de la tabla somos redireccionadas a una vista de proyectos que contiene mayor información sobre el mismo. Aquí podemos visualizar la información completa del proyecto, el nombre del usuario que lo creó (el cual al ser seleccionado nos redirecciona al perfil del mismo) e información acerca de las transacciones realizadas para apoyar el proyecto en cuestión.
+![image](https://user-images.githubusercontent.com/38841602/127776097-86f9d3ec-b9a8-46bd-9170-75d244c70825.png)
 
-### Markdown
+## Gestión de Usuarios
+De manera similar a los proyectos, cuando ingresamos a la sección Users encontramos una tabla que muestra los usuarios existentes en la aplicación y algunas métricas correspondientes a los mismos.
+![image](https://user-images.githubusercontent.com/38841602/127776150-61ba0739-c824-453a-9507-2e648d54af91.png)
+Cuando seleccionamos alguna de las filas de la tabla somos redireccionados al perfil de este usuario, desde el cual podemos ver los proyectos que contiene (que al ser seleccionados nos redirecciona a la página del proyecto) así como un gráfico que muestra el tipo de proyectos que tiene creados. En esta misma página tenemos la opción de bloquear al usuario o desbloquearlo en el caso que este ya se encuentre bloqueado.
+![image](https://user-images.githubusercontent.com/38841602/127776331-b904dcf9-8cdd-45e3-aadf-224ebdbae042.png)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Dashboards
+Al ingresar a la sección de Dashboards podemos visualizar un gráfico interactivo que muestra la cantidad de proyectos por tipo.
+![image](https://user-images.githubusercontent.com/38841602/127776487-5e493f9e-9546-4b12-af61-6f7887fe383e.png)
 
-```markdown
-Syntax highlighted code block
+## Gestión de Servicios
+Al ingresar a la sección Services Manager podemos visualizar una tabla con los servicios utilizados (Backend Users, Payments y Projects) y sus estados. Al seleccionar alguna de las filas somos redireccionados a un dashboard de Datadog que nos permite obtener más información acerca de cada uno de los servicios.
+![image](https://user-images.githubusercontent.com/38841602/127776796-96dc2b1b-2914-4d70-8f06-ffb0e7d0da67.png)
 
-# Header 1
-## Header 2
-### Header 3
+## Gestión de Transacciones
+Al ingresar a la sección Transactions tenemos una tabla que muestra todas las transacciones realizadas, a estas se le pueden aplicar filtros por tipo de transacción, tipo de entidad que realiza la transacción y el tipo que la recibe (usuario o proyecto).
+![image](https://user-images.githubusercontent.com/38841602/127776963-9c69d209-7b5a-40c3-979a-f121d7d28782.png)
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Seedy-Fiuba-Grupo-5/Backoffice-web/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
