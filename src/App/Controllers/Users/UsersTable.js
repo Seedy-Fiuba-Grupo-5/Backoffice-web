@@ -91,17 +91,17 @@ class UsersTable extends Component {
                     <div className="col">
                         <div className="card card-metrics">
                             <div className="card-content white-text">
-                                <span className="card-title">Percentage of Users Blocked Users: {this.state.metrics['percentage_blocked']}</span>
+                                <span className="card-title">Percentage of Users Blocked Users: {Math.round(this.state.metrics['percentage_blocked']*100)}%</span>
                             </div>
                         </div>
                         <div className="card card-metrics">
                             <div className="card-content white-text">
-                                <span className="card-title">Percentage of Users with Projects: {this.state.metrics['percentage_with_project']}</span>
+                                <span className="card-title">Percentage of Users with Projects: {Math.round(this.state.metrics['percentage_with_project']*100)}%</span>
                             </div>
                         </div>
                         <div className="card card-metrics">
                             <div className="card-content white-text">
-                                <span className="card-title">Percentage of Users that are Seers: {this.state.metrics['percentage_seer']}</span>
+                                <span className="card-title">Percentage of Users that are Seers: {Math.round(this.state.metrics['percentage_seer']*100)}%</span>
                             </div>
                         </div>
                     </div>

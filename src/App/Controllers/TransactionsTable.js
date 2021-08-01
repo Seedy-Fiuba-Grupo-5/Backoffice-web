@@ -96,7 +96,7 @@ class TransactionsTable extends Component {
                         </div>
                     </div>
                     <div className="col">
-                        <div className="card filter-card">
+                        <div className="card filter-card" style={{width: "200pt"}}>
                             <div className="input-field">
                                 <select value={this.state.typeFilter} onChange={this.onTypeChange}>
                                     <option value="">Transaction Type</option>

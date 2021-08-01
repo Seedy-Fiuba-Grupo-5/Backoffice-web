@@ -148,8 +148,15 @@ class ProjectViewer extends Component {
                     </div>
                 </div>
                 <div className="row">
+                    <h5>Created by: <a href={"/users/" +this.state.owner.id}>{this.state.owner.name} {this.state.owner.lastName}</a></h5>
+                </div>
+                <div className="row">
                     <h5>{this.state.project.hashtags}</h5>
+                </div>
+                <div className="row">
                     <h5>Description</h5>
+                </div>
+                <div className="row">
                     <p>{this.state.project.description}</p>
                 </div>
                 <h1>Transactions</h1>
