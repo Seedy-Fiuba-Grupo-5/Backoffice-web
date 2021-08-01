@@ -2,13 +2,16 @@
 El siguiente documento busca explicar a nuevos usuarios el funcionamiento del [Back-Office Web](https://seedy-fiuba-backoffice-web.herokuapp.com), aplicación responsable de realizar las tareas administrativas de la aplicación Seedy Fiuba.
 
 # Table of Contents
-1. [Example](#example)
+1. [Login](#login)
 2. [Example2](#example2)
 3. [Third Example](#third-example)
 4. [Fourth Example](#fourth-examplehttpwwwfourthexamplecom)
 
 
-## Example
+## Login
+Al entrar a la aplicación se debe ingresar con email y contraseña, estos datos deben ser provistos por otro administrador que haya creado el usuario. A diferencia de los usuarios de la aplicación mobile los administradores no pueden registrarse.
+![image](https://user-images.githubusercontent.com/38841602/127774552-4d04c30c-b848-4dde-9d70-f1efb68c0638.png)
+
 ## Example2
 ## Third Example
 ## [Fourth Example](http://www.fourthexample.com) 
