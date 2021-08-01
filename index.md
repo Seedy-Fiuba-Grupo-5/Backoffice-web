@@ -48,6 +48,8 @@ Al ingresar a la sección de Dashboards podemos visualizar un gráfico interacti
 Al ingresar a la sección Services Manager podemos visualizar una tabla con los servicios utilizados (Backend Users, Payments y Projects) y sus estados. Al seleccionar alguna de las filas somos redireccionados a un dashboard de Datadog que nos permite obtener más información acerca de cada uno de los servicios.
 ![image](https://user-images.githubusercontent.com/38841602/127776796-96dc2b1b-2914-4d70-8f06-ffb0e7d0da67.png)
 
+![image](https://user-images.githubusercontent.com/38841602/127777383-9723440a-8304-47cb-a11e-a4ba24676506.png)
+
 ## Gestión de Transacciones
 Al ingresar a la sección Transactions tenemos una tabla que muestra todas las transacciones realizadas, a estas se le pueden aplicar filtros por tipo de transacción, tipo de entidad que realiza la transacción y el tipo que la recibe (usuario o proyecto).
 ![image](https://user-images.githubusercontent.com/38841602/127776963-9c69d209-7b5a-40c3-979a-f121d7d28782.png)
