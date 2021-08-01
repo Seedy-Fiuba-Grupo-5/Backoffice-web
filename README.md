@@ -1,8 +1,4 @@
 # Backoffice Web
-
-## Repositorio
-Este repositorio fue creado a partir del siguiente repositorio:   
-https://github.com/StephenGrider/docker-react  
   
 ## Tecnologias
 - Javascript
