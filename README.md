@@ -8,28 +8,6 @@ https://github.com/StephenGrider/docker-react
 - Javascript
 - React
 
-## Entorno local
-
-### Construccion
-```
-docker-compose build
-```
-Tiempo estimado de construccion: 5 minutos.    
-Nota: Los unicos cambios que requiren reconstruir la imagen son aquellos que afectan los siguientes archivos:  
-- Dockerfile.dev
-- package.json
-
-### Ejecucion
-```
-docker-compose up
-```
-Nota 1: Los cambios en el codigo fuente se actualizan automaticante en el servicio en ejecucion. Por ende, no require volver a construir la imagen.  
-
-Nota 2: Este comando tambien levanta un servicio de pruebas interactivo. Para solo levantar el servicio web, ejecutar:
-```
-docker-compose up service_backoffice_web
-```
-
 ## Entorno Local
 ### Construcción
 ```
