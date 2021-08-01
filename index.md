@@ -13,7 +13,7 @@ El siguiente documento busca explicar a nuevos usuarios el funcionamiento del [B
 
 
 ## Login
-Al entrar a la aplicación se debe ingresar con email y contraseña, estos datos deben ser provistos por otro administrador que haya creado el usuario. A diferencia de los usuarios de la aplicación mobile los administradores no pueden registrarse.
+Al entrar a la aplicación se debe ingresar con email y contraseña, estos datos deben ser provistos por otro administrador que haya creado el usuario. A diferencia de los usuarios de la aplicación mobile los administradores no pueden registrarse por si mismos sino que deben ser registrados por otro administrador.
 ![image](https://user-images.githubusercontent.com/38841602/127774552-4d04c30c-b848-4dde-9d70-f1efb68c0638.png)
 
 ## Pantalla de Inicio
@@ -29,9 +29,9 @@ También, al apretar en las filas de la tabla somos redireccionados al perfil de
 ![image](https://user-images.githubusercontent.com/38841602/127775435-a8e97372-bd15-4cb9-9437-035319a4a086.png)
 
 ## Gestión de Proyectos
-Ingresando a la sección Projects podemos visualizar una tabla que muestra todos los proyectos creados. A la misma le podemos aplicar distintos filtros: por Tipo, por Goal y por Nombre.También, podemos observar métricas acerca de los proyectos existentes en la aplicación.
+Ingresando a la sección Projects podemos visualizar una tabla que muestra todos los proyectos creados. A la misma le podemos aplicar distintos filtros: por Tipo, por Goal y por Nombre. También, podemos observar métricas acerca de los proyectos existentes en la aplicación.
 ![image](https://user-images.githubusercontent.com/38841602/127775727-30fc3a4a-34df-4f1a-b1f5-49930f451adf.png)
-Al apretar en alguna de las filas de la tabla somos redireccionadas a una vista de proyectos que contiene mayor información sobre el mismo. Aquí podemos visualizar la información completa del proyecto, el nombre del usuario que lo creó (el cual al ser seleccionado nos redirecciona al perfil del mismo) e información acerca de las transacciones realizadas para apoyar el proyecto en cuestión.
+Al apretar en alguna de las filas de la tabla somos redireccionados a una vista de proyectos que contiene mayor información sobre el mismo. Aquí podemos visualizar la información completa del proyecto, el nombre del usuario que lo creó (el cual al ser seleccionado nos redirecciona al perfil del mismo) e información acerca de las transacciones realizadas para apoyar el proyecto en cuestión.
 ![image](https://user-images.githubusercontent.com/38841602/127776097-86f9d3ec-b9a8-46bd-9170-75d244c70825.png)
 
 ## Gestión de Usuarios
