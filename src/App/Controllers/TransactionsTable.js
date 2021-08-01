@@ -85,7 +85,7 @@ class TransactionsTable extends Component {
                 </div>
                 <div className="row">
                     <div className="col">
-                        <div className="scroll-card">
+                        <div className="scroll-card" style={{width: "600pt"}}>
                             <Table items={items} values={this.state.transactions} redirect={this.redirect} loading={this.state.loading}/>
                             {this.state.showSnackbar ?
                                 <Messagebar

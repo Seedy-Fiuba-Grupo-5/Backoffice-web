@@ -43,12 +43,13 @@ class AdminsForm extends Component {
         if(response.status === 201){
             this.setState({error: ''});
             this.setState({showSnackbar : true});
-            this.setState({loading : false});
+
         } else {
             this.setState({error: response.status+': An unexpected error occurred'});
             this.setState({showSnackbar : true});
-            this.setState({loading : false});
         }
+        this.setState({loading : false});
+        this.props.history.push("/admins");
     }
 
     errorHandler(err) {
@@ -74,13 +75,19 @@ class AdminsForm extends Component {
 
     createAdmin(){
         this.setState({loading: true});
+        if(!this.state.name || !this.state.lastName || !this.state.email || !this.state.password){
+            this.setState({error: 'Missing Values'});
+            this.setState({showSnackbar : true});
+            this.setState({loading: false});
+            return;
+        }
         const body = {
             "name": this.state.name,
             "lastName": this.state.lastName,
             "email": this.state.email,
             "password": this.state.password
         }
-        ApiController.post(LOCAL_URL_ADMINS, body ,this.errorHandler, this.responseHandler);
+        ApiController.post(LOCAL_URL_ADMINS, body ,this.errorHandler, this.postResponseHandler);
     }
 
     componentDidMount() {

@@ -55,11 +55,6 @@ class Profile extends Component {
             } else {
                 response.data.active = 'Blocked'
             }
-            if(response.data.seer) {
-                response.data.seer = 'True'
-            } else {
-                response.data.seer = 'False'
-            }
             this.setState({user : response.data});
             this.setState({loadingUser: false});
             this.setState({showSnackbar: true});
@@ -115,8 +110,7 @@ class Profile extends Component {
         const items = [
             ["Full Name","assignment_ind", this.state.user.name + ' ' + this.state.user.lastName],
             ["E-mail","email", this.state.user.email],
-            ["State","nature_people", this.state.user.active],
-            ["Seer","nature_people", this.state.user.seer]
+            ["State","nature_people", this.state.user.active]
         ];
 
         return (
