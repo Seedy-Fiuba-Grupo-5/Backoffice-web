@@ -67,6 +67,9 @@ export class NavBar extends Component {
                     <li><a href={"/projects"}><i className="material-icons">perm_media</i>Projects</a></li>
                     <li><a href={"/users"}><i className="material-icons">supervisor_account</i>Users</a></li>
                     <li><a href={"/admins"}><i className="material-icons">supervisor_account</i>System Administrators</a></li>
+                    <li><a href={"/dashboards"}><i className="material-icons">equalizer</i>Dashboards</a></li>
+                    <li><a href={"/services"}><i className="material-icons">settings_system_daydream</i>Services Manager</a></li>
+                    <li><a href={"/transactions"}><i className="material-icons">settings_system_daydream</i>Transactions</a></li>
                     <li><a onClick={() => {localStorage.removeItem("token")}} href={"/"}><i className="material-icons">power_settings_new</i>Log Out</a></li>
                 </ul>
                 {this.state.showSnackbar ?

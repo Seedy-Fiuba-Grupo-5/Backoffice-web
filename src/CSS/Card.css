@@ -35,6 +35,10 @@
     background-color: #BDBDBD;
 }
 
+.card-metrics{
+    background-color: #4b1e4d;
+}
+
 .scroll-card{
     height: 70vh;
     overflow-x: scroll;

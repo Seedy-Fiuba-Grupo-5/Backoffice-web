@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import {getSetting} from "../../settings";
 import {Table} from "../../Components/Table";
 import {Messagebar} from "../../Components/Messagebar";
-import Slider from '@material-ui/core/Slider';
-import Typography from '@material-ui/core/Typography';
 import ApiController from "../ApiController";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 const URL = getSetting('BACKEND_URL')+'/projects';
 
 class ProjectsTable extends Component {
@@ -14,17 +14,21 @@ class ProjectsTable extends Component {
             projects: [],
             showSnackbar: false,
             error: '',
-            goalFilter: [0, 50000],
+            minGoal: 0,
+            maxGoal: 10000,
             typeFilter: '',
-            name: ''
+            name: '',
+            metrics: {}
         };
         this.redirect = this.redirect.bind(this);
-        this.handleGoalSliderChange = this.handleGoalSliderChange.bind(this);
+        this.handleMinGoalChange = this.handleMinGoalChange.bind(this);
+        this.handleMaxGoalChange = this.handleMaxGoalChange.bind(this);
         this.errorHandler = this.errorHandler.bind(this);
         this.responseHandler = this.responseHandler.bind(this);
         this.getProjects = this.getProjects.bind(this);
         this.onChange = this.onChange.bind(this);
         this.nameChange = this.nameChange.bind(this);
+        this.metricsResponseHandler = this.metricsResponseHandler.bind(this);
     }
 
     errorHandler(err) {
@@ -41,6 +45,13 @@ class ProjectsTable extends Component {
                 delete project['description'];
                 delete project['hashtags'];
                 delete project['image'];
+                delete project['video'];
+                delete project['path'];
+                delete project['seer'];
+                delete project['lat'];
+                delete project['lon'];
+                delete project['rating'];
+                delete project['favorites'];
                 return 0;
             })
             this.setState({projects : response.data});
@@ -50,29 +61,45 @@ class ProjectsTable extends Component {
         }
     }
 
+    metricsResponseHandler(response){
+        if(response.status === 200){
+            this.setState({metrics : response.data});
+        }
+    }
+
     getProjects(){
         this.setState({projects: []});
         this.setState({loading:true});
         const params = {
             type: this.state.typeFilter,
-            maxGoal: Math.max.apply(null, this.state.goalFilter),
-            minGoal: Math.min.apply(null, this.state.goalFilter),
+            maxGoal: this.state.maxGoal,
+            minGoal: this.state.minGoal,
             name: this.state.name
         };
         ApiController.get(URL, this.errorHandler, this.responseHandler, params);
     }
 
+    getMetrics(){
+        ApiController.get(URL+'/metrics', this.errorHandler, this.metricsResponseHandler);
+    }
+
     componentDidMount() {
         this.getProjects();
+        this.getMetrics();
     }
 
     redirect(project) {
         this.props.history.push("/projects/"+project.id);
     }
 
-    handleGoalSliderChange = (event, newValue) => {
+    handleMinGoalChange = (event) => {
         event.preventDefault();
-        this.setState({goalFilter: newValue});
+        this.setState({minGoal: event.target.value});
+    };
+
+    handleMaxGoalChange = (event) => {
+        event.preventDefault();
+        this.setState({maxGoal: event.target.value});
     };
 
     onChange(event){
@@ -84,7 +111,7 @@ class ProjectsTable extends Component {
     }
 
     render() {
-        const items = ['ID', 'Name', 'Type', 'Goal', 'End Date', 'Location']
+        const items = ['ID', 'Name', 'Type', 'Goal', 'End Date', 'Location', 'Created On']
         return (
             <div className="container">
                 <div className="h1" style={{marginTop:"20pt"}}>
@@ -105,38 +132,52 @@ class ProjectsTable extends Component {
                     <div className="col">
                         <div className="card filter-card">
                             <div className="input-field">
-                                <select value={this.state.typeFilter} onChange={this.onChange}>
-                                    <option value="">Project Type</option>
-                                    <option value="Art">Art</option>
-                                    <option value="Comics">Comics</option>
-                                    <option value="Crafts">Crafts</option>
-                                    <option value="Dance">Dance</option>
-                                    <option value="Crafts">Crafts</option>
-                                    <option value="Design">Design</option>
-                                    <option value="Fashion">Fashion</option>
-                                    <option value="Film & Video">Film & Video</option>
-                                    <option value="Food">Food</option>
-                                    <option value="Games">Games</option>
-                                    <option value="Journalism">Journalism</option>
-                                    <option value="Music">Music</option>
-                                    <option value="Photography">Photography</option>
-                                    <option value="Publishing">Publishing</option>
-                                    <option value="Technology">Technology</option>
-                                    <option value="Theater">Theater</option>
-                                    <option value="Other">Other</option>
-                                </select>
+                                <h5>Project Type</h5>
+                                <Select value={this.state.typeFilter} onChange={this.onChange} style={{width:'150pt'}}>
+                                    <MenuItem value="">All</MenuItem>
+                                    <MenuItem value="Art">Art</MenuItem>
+                                    <MenuItem value="Comics">Comics</MenuItem>
+                                    <MenuItem value="Crafts">Crafts</MenuItem>
+                                    <MenuItem value="Dance">Dance</MenuItem>
+                                    <MenuItem value="Crafts">Crafts</MenuItem>
+                                    <MenuItem value="Design">Design</MenuItem>
+                                    <MenuItem value="Fashion">Fashion</MenuItem>
+                                    <MenuItem value="Film & Video">Film & Video</MenuItem>
+                                    <MenuItem value="Food">Food</MenuItem>
+                                    <MenuItem value="Games">Games</MenuItem>
+                                    <MenuItem value="Journalism">Journalism</MenuItem>
+                                    <MenuItem value="Music">Music</MenuItem>
+                                    <MenuItem value="Photography">Photography</MenuItem>
+                                    <MenuItem value="Publishing">Publishing</MenuItem>
+                                    <MenuItem value="Technology">Technology</MenuItem>
+                                    <MenuItem value="Theater">Theater</MenuItem>
+                                    <MenuItem value="Other">Other</MenuItem>
+                                </Select>
                             </div>
                             <div className="input-field">
-                                <Typography id="range-slider" gutterBottom>
-                                    Goal range
-                                </Typography>
-                                <Slider
-                                    value={this.state.goalFilter}
-                                    onChange={this.handleGoalSliderChange}
-                                    valueLabelDisplay="auto"
-                                    aria-labelledby="range-slider"
-                                    max="50000"
-                                />
+                                <h5>Goal</h5>
+                                <div className="row">
+                                    <div className="col">
+                                        <input
+                                            placeholder="Min. Goal"
+                                            id="minGoal"
+                                            type="number"
+                                            className="validate"
+                                            value={this.state.minGoal}
+                                            onChange={this.handleMinGoalChange}
+                                        />
+                                    </div>
+                                    <div className="col">
+                                        <input
+                                            placeholder="Max. Goal"
+                                            id="maxGoal"
+                                            type="number"
+                                            className="validate"
+                                            value={this.state.maxGoal}
+                                            onChange={this.handleMaxGoalChange}
+                                        />
+                                    </div>
+                                </div>
                                 <input
                                     placeholder="Name"
                                     id="first_name"
@@ -146,9 +187,24 @@ class ProjectsTable extends Component {
                                     onChange={this.nameChange}
                                 />
                             </div>
-                            <button className="btn waves-effect waves-light login-button" type="submit" name="action" onClick={this.getProjects}>
+                            <button className="btn waves-effect waves-light" style={{backgroundColor: "#4b1e4d"}} type="submit" name="action" onClick={this.getProjects}>
                                 Filter
                             </button>
+                        </div>
+                        <div className="card card-metrics">
+                            <div className="card-content white-text">
+                                <span className="card-title">Most Popular Project Type: {this.state.metrics['most_popular_type']}</span>
+                            </div>
+                        </div>
+                        <div className="card card-metrics">
+                            <div className="card-content white-text">
+                                <span className="card-title">Average Project Goal: {Math.round(this.state.metrics['avg_goal'] * 100) / 100}</span>
+                            </div>
+                        </div>
+                        <div className="card card-metrics">
+                            <div className="card-content white-text">
+                                <span className="card-title">Average Project Duration (Months): {Math.round(this.state.metrics['avg_duration'])}</span>
+                            </div>
                         </div>
                     </div>
                 </div>

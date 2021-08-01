@@ -34,7 +34,7 @@ class Profile extends Component {
     projectResponseHandler(response) {
         if(response.status === 200 && this.state.error.length === 0){
             this.setState({projects : response.data});
-            this.setState({typeReport: ReportGenerator.createTypeReport(this.state.projects)});
+            this.generateReport();
             this.setState({loadingProjects: false});
             this.setState({showSnackbar: true});
         }
@@ -71,6 +71,17 @@ class Profile extends Component {
         ApiController.get(URL+this.props.match.params.id, this.errorHandler, this.userResponseHandler);
     }
 
+    generateReport(){
+        let arr = ReportGenerator.createTypeReport(this.state.projects);
+        let aux = [];
+        for(let i = 0; i < arr.length; i++){
+            if ( arr[i].count > 0) {
+                aux.push(arr[i]);
+            }
+        }
+        this.setState({typeReport: aux});
+    }
+
     blockUser(){
         const body = {"id_admin": parseInt(localStorage.getItem("adminId"), 10)}
         this.setState({showSnackbar: false});
@@ -90,7 +101,7 @@ class Profile extends Component {
 
         return (
             <text x={x} y={y} fill="black" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-                {this.state.typeReport[index]['count'] > 0 ? this.state.typeReport[index]['type'] : null}
+                {this.state.typeReport[index]['type']}
             </text>
         );
     };
@@ -115,7 +126,11 @@ class Profile extends Component {
                                 <div className="card-content">
                                     {this.state.projects.length > 0 ? this.state.projects.map((project) => {
                                             return (
-                                                <ProjectListCard title={project.name} text={project.description} redirectLink={'/projects/'+project.id}/>
+                                                <ProjectListCard title={project.name}
+                                                                 text={project.description}
+                                                                 redirectLink={'/projects/'+project.id}
+                                                                 image={project.image}
+                                                />
                                             );
                                         }) :
                                         <div className="h1" style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100%'}}>
@@ -131,7 +146,6 @@ class Profile extends Component {
                             <SectionList values={items}/>
                         </div>
                         <div className="row" >
-
                                 {this.state.user.active === 'Active'?
                                     <Button variant="contained" color="secondary" onClick={this.blockUser}>Block User</Button>:
                                     <Button variant="contained" color="primary" onClick={this.blockUser}>Unblock User</Button>

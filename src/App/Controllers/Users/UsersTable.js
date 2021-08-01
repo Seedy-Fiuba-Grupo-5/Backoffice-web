@@ -11,11 +11,14 @@ class UsersTable extends Component {
         this.state = {
             users: [],
             error: '',
-
+            showSnackbar: false,
+            loading: false,
+            metrics: {}
         };
         this.redirect = this.redirect.bind(this);
         this.errorHandler = this.errorHandler.bind(this);
         this.responseHandler = this.responseHandler.bind(this);
+        this.metricsResponseHandler = this.metricsResponseHandler.bind(this)
     }
 
     responseHandler(response) {
@@ -31,6 +34,12 @@ class UsersTable extends Component {
         this.setState({error: ''});
         this.setState({showSnackbar : true});
         this.setState({loading : false});
+    }
+
+    metricsResponseHandler(response){
+        if(response.status === 200){
+            this.setState({metrics : response.data});
+        }
     }
 
     errorHandler(err) {
@@ -50,8 +59,14 @@ class UsersTable extends Component {
         this.props.history.push("/users/"+user.id);
     }
 
+    getMetrics(){
+        ApiController.get(LOCAL_URL_USERS+"/metrics", this.errorHandler, this.metricsResponseHandler);
+    }
+
+
     componentDidMount() {
         this.getUsers();
+        this.getMetrics();
     }
 
     render() {
@@ -61,14 +76,35 @@ class UsersTable extends Component {
                 <div className="h1" style={{marginTop:"20pt"}}>
                     Users Table
                 </div>
-                <div className="scroll-card">
-                    <Table items={items} values={this.state.users} redirect={this.redirect} loading={this.state.loading}/>
-                    {this.state.showSnackbar ?
-                        <Messagebar
-                            message={this.state.error.length > 0 ? this.state.error : "Users loaded successfully"}
-                            type={this.state.error.length > 0 ? "error" : "success"}
-                        /> : null
-                    }
+                <div className="row">
+                    <div className="col">
+                        <div className="scroll-card">
+                            <Table items={items} values={this.state.users} redirect={this.redirect} loading={this.state.loading}/>
+                            {this.state.showSnackbar ?
+                                <Messagebar
+                                    message={this.state.error.length > 0 ? this.state.error : "Users loaded successfully"}
+                                    type={this.state.error.length > 0 ? "error" : "success"}
+                                /> : null
+                            }
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="card card-metrics">
+                            <div className="card-content white-text">
+                                <span className="card-title">Percentage of Users Blocked Users: {Math.round(this.state.metrics['percentage_blocked']*100)}%</span>
+                            </div>
+                        </div>
+                        <div className="card card-metrics">
+                            <div className="card-content white-text">
+                                <span className="card-title">Percentage of Users with Projects: {Math.round(this.state.metrics['percentage_with_project']*100)}%</span>
+                            </div>
+                        </div>
+                        <div className="card card-metrics">
+                            <div className="card-content white-text">
+                                <span className="card-title">Percentage of Users that are Seers: {Math.round(this.state.metrics['percentage_seer']*100)}%</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
