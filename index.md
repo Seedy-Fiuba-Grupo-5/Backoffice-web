@@ -1,9 +1,5 @@
 ## Back-Office Web Guia de Usuarios
-
-You can use the [editor on GitHub](https://github.com/Seedy-Fiuba-Grupo-5/Backoffice-web/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
+El siguiente documento busca explicar a nuevos usuarios el funcionamiento del [Back-Office Web](https://seedy-fiuba-backoffice-web.herokuapp.com), aplicación responsable de realizar las tareas administrativas de la aplicación Seedy Fiuba.
 
 # Table of Contents
 1. [Example](#example)
